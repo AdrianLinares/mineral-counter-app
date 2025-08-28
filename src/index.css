@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Improved background with better depth */
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+
+    /* Enhanced card backgrounds for better separation */
+    --card: 224 44% 7%;
+    --card-foreground: 213 31% 91%;
+
+    /* Better popover contrast */
+    --popover: 224 44% 7%;
+    --popover-foreground: 213 31% 91%;
+
+    /* More vibrant primary colors */
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 84% 4.9%;
+
+    /* Improved secondary with better contrast */
+    --secondary: 215 28% 17%;
+    --secondary-foreground: 210 40% 98%;
+
+    /* Better muted colors for subtle elements */
+    --muted: 215 28% 17%;
+    --muted-foreground: 217 10% 65%;
+
+    /* Enhanced accent colors */
+    --accent: 215 28% 17%;
+    --accent-foreground: 210 40% 98%;
+
+    /* Better destructive colors for dark mode */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* Improved borders and inputs */
+    --border: 215 28% 17%;
+    --input: 215 28% 17%;
+    --ring: 217 91% 60%;
+
+    /* Enhanced sidebar colors */
+    --sidebar-background: 224 47% 6%;
+    --sidebar-foreground: 213 31% 91%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 222 84% 4.9%;
+    --sidebar-accent: 215 25% 12%;
+    --sidebar-accent-foreground: 213 31% 91%;
+    --sidebar-border: 215 25% 12%;
+    --sidebar-ring: 217 91% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    /* Smooth transitions for theme switching */
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Apply smooth transitions to all themed elements */
+  *[class*="bg-"],
+  *[class*="text-"],
+  *[class*="border-"] {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+
+  /* Special handling for cards and interactive elements */
+  .card,
+  button,
+  input,
+  textarea,
+  select {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  /* Smooth transitions for theme toggle */
+  .theme-toggle {
+    transition: all 0.3s ease;
+  }
+
+  /* Enhanced focus states for better accessibility in both themes */
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  [role="button"]:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    transition: outline-color 0.2s ease;
+  }
+
+  /* Interactive elements hover states */
+  button:hover:not(:disabled),
+  [role="button"]:hover:not(:disabled) {
+    transform: translateY(-1px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  /* Enhanced card hover states */
+  [data-card]:hover {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .dark [data-card]:hover {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+  }
+
+  /* Better visual feedback for disabled states */
+  button:disabled,
+  input:disabled,
+  textarea:disabled,
+  select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  /* Improved ring colors for dark mode */
+  .dark button:focus-visible,
+  .dark input:focus-visible,
+  .dark textarea:focus-visible,
+  .dark select:focus-visible,
+  .dark [role="button"]:focus-visible {
+    outline-color: hsl(var(--ring));
+  }
+}
