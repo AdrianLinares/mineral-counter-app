@@ -16,7 +16,13 @@ import {
   Download, 
   Upload,
   Trash2,
-  Microscope
+  Microscope,
+  BookOpen,
+  Target,
+  Search,
+  MousePointer,
+  Save,
+  Info
 } from 'lucide-react';
 import { useCounters } from '@/hooks/useCounters';
 import { MineralSelector } from '@/components/MineralSelector';
@@ -335,6 +341,95 @@ export default function MineralCounterApp() {
                     </AlertDialog>
                   </div>
                 )}
+              </CardContent>
+            </Card>
+            
+            {/* Instructions Card */}
+            <Card data-card className="mt-6">
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <BookOpen className="h-5 w-5 text-blue-600" />
+                  Instrucciones de Uso
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <MousePointer className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-sm">1. Crear Contador</h4>
+                      <p className="text-xs text-muted-foreground">
+                        Haz clic en "Nuevo Contador" para seleccionar un mineral o textura de la base de datos.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <Search className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-sm">2. Buscar y Seleccionar</h4>
+                      <p className="text-xs text-muted-foreground">
+                        Usa las pestañas "Minerales" y "Texturas" para encontrar lo que necesitas. Busca por nombre o descripción.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <Target className="h-5 w-5 text-purple-600 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-sm">3. Contar Observaciones</h4>
+                      <p className="text-xs text-muted-foreground">
+                        Usa los botones +/- para contar cada observación. Personaliza el incremento y valor máximo si es necesario.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <Save className="h-5 w-5 text-orange-600 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-sm">4. Exportar Datos</h4>
+                      <p className="text-xs text-muted-foreground">
+                        Exporta tus conteos en formato JSON para análisis posterior o para compartir con colegas.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="pt-4 border-t">
+                  <h3 className="font-semibold text-sm mb-3 flex items-center gap-2">
+                    <Info className="h-4 w-4 text-blue-600" />
+                    Casos de Uso
+                  </h3>
+                  <div className="space-y-2">
+                    <div className="bg-gradient-to-r from-emerald-50/80 to-green-50/80 dark:from-emerald-950/20 dark:to-green-950/20 p-3 rounded-lg border border-emerald-200/30 dark:border-emerald-700/30">
+                      <h4 className="font-semibold text-xs text-emerald-700 dark:text-emerald-300">🔬 Análisis Modal</h4>
+                      <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-1">
+                        Conteo de minerales para determinar composición modal de rocas ígneas, sedimentarias y metamórficas.
+                      </p>
+                    </div>
+                    
+                    <div className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 dark:from-blue-950/20 dark:to-indigo-950/20 p-3 rounded-lg border border-blue-200/30 dark:border-blue-700/30">
+                      <h4 className="font-semibold text-xs text-blue-700 dark:text-blue-300">📊 Estudios Petrográficos</h4>
+                      <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">
+                        Análisis cuantitativo de texturas y estructuras para caracterización petrológica detallada.
+                      </p>
+                    </div>
+                    
+                    <div className="bg-gradient-to-r from-purple-50/80 to-violet-50/80 dark:from-purple-950/20 dark:to-violet-950/20 p-3 rounded-lg border border-purple-200/30 dark:border-purple-700/30">
+                      <h4 className="font-semibold text-xs text-purple-700 dark:text-purple-300">🎓 Enseñanza</h4>
+                      <p className="text-xs text-purple-600 dark:text-purple-400 mt-1">
+                        Herramienta educativa para estudiantes de geología, petrología y mineralogía en prácticas de laboratorio.
+                      </p>
+                    </div>
+                    
+                    <div className="bg-gradient-to-r from-amber-50/80 to-yellow-50/80 dark:from-amber-950/20 dark:to-yellow-950/20 p-3 rounded-lg border border-amber-200/30 dark:border-amber-700/30">
+                      <h4 className="font-semibold text-xs text-amber-700 dark:text-amber-300">⛏️ Investigación</h4>
+                      <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">
+                        Investigación académica y profesional en ciencias de la Tierra que requiere análisis cuantitativo microscópico.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>
