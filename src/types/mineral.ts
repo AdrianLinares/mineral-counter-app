@@ -248,7 +248,7 @@ tectosilicatos: [
   ],
 
   minerales_detríticos: [
-    { name: "Cuarzo detrítico", formula: "SiO₂", system: "Trigonal", category: "minerales_detríticos" },
+    { name: "Chert", formula: "SiO₂", system: "Trigonal", category: "minerales_detríticos" },
     { name: "Feldespato detrítico", formula: "(K,Na,Ca)(Si,Al)₄O₈", system: "Variable", category: "minerales_detríticos" },
     { name: "Fragmentos líticos", formula: "Variable", system: "Variable", category: "minerales_detríticos" },
     { name: "Micas detríticas", formula: "Variable", system: "Monoclínico", category: "minerales_detríticos" },

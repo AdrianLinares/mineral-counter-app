@@ -33,12 +33,32 @@ export const CounterCard = ({
   const [editMaxValue, setEditMaxValue] = useState(counter.maxValue?.toString() || '');
   const [editColor, setEditColor] = useState(counter.color);
 
+  // Agregar esta función para resetear los valores
+  const resetEditValues = () => {
+    setEditIncrement(counter.increment.toString());
+    setEditMaxValue(counter.maxValue?.toString() || '');
+    setEditColor(counter.color);
+  };
+
+  // Modificar la función que controla el diálogo
+  const handleDialogChange = (open: boolean) => {
+    setSettingsOpen(open);
+    if (open) {
+      resetEditValues();
+    }
+  };
+
   const handleSaveSettings = () => {
     onUpdate({
       increment: Math.max(1, parseInt(editIncrement) || 1),
       maxValue: editMaxValue ? parseInt(editMaxValue) : undefined,
       color: editColor
     });
+    setSettingsOpen(false);
+  };
+
+  const handleCancel = () => {
+    resetEditValues();
     setSettingsOpen(false);
   };
 
@@ -82,7 +102,7 @@ export const CounterCard = ({
             <Plus className="h-4 w-4" />
           </Button>
           
-          <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
+          <Dialog open={settingsOpen} onOpenChange={handleDialogChange}>
             <DialogTrigger asChild>
               <Button variant="ghost" size="sm">
                 <Settings className="h-4 w-4" />
@@ -173,7 +193,7 @@ export const CounterCard = ({
             <h3 className="font-semibold text-sm text-foreground">{counter.mineralName}</h3>
           </div>
           <div className="flex gap-1">
-            <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
+            <Dialog open={settingsOpen} onOpenChange={handleDialogChange}>
               <DialogTrigger asChild>
                 <Button variant="ghost" size="sm">
                   <Settings className="h-4 w-4" />
