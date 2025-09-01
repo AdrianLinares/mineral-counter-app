@@ -116,6 +116,15 @@ export const useCounters = () => {
     return false;
   };
 
+  const reorderCounters = (startIndex: number, endIndex: number) => {
+    setCounters(prev => {
+      const result = Array.from(prev);
+      const [removed] = result.splice(startIndex, 1);
+      result.splice(endIndex, 0, removed);
+      return result;
+    });
+  };
+
   const totalCount = counters.reduce((sum, counter) => sum + counter.value, 0);
 
   return {
@@ -127,6 +136,7 @@ export const useCounters = () => {
     decrementCounter,
     resetCounter,
     resetAllCounters,
+    reorderCounters,
     exportData,
     importData,
     totalCount

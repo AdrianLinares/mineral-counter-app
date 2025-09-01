@@ -22,13 +22,17 @@ import {
   Search,
   MousePointer,
   Save,
-  Info
+  Info,
+  GripVertical
 } from 'lucide-react';
 import { useCounters } from '@/hooks/useCounters';
 import { MineralSelector } from '@/components/MineralSelector';
 import { CounterCard } from '@/components/CounterCard';
+import { DragDropContainer } from '@/components/DragDropContainer';
+import { DraggableCounterCard } from '@/components/DraggableCounterCard';
 import { ThemeToggle } from '@/components/theme-toggle';
 import type { ViewMode } from '@/types/mineral';
+import { DropResult } from 'react-beautiful-dnd';
 
 export default function MineralCounterApp() {
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -49,6 +53,7 @@ export default function MineralCounterApp() {
     decrementCounter,
     resetCounter,
     resetAllCounters,
+    reorderCounters,
     exportData,
     importData,
     totalCount
@@ -112,6 +117,28 @@ export default function MineralCounterApp() {
     toast({
       title: "Contadores eliminados",
       description: "Todos los contadores han sido eliminados",
+    });
+  };
+
+  const handleDragEnd = (result: DropResult) => {
+    const { destination, source } = result;
+
+    // If dropped outside a droppable area or no destination
+    if (!destination) {
+      return;
+    }
+
+    // If dropped in the same position
+    if (destination.index === source.index) {
+      return;
+    }
+
+    // Reorder the counters
+    reorderCounters(source.index, destination.index);
+    
+    toast({
+      title: "Contador reordenado",
+      description: "El orden de los contadores ha sido actualizado",
     });
   };
 
@@ -385,9 +412,19 @@ export default function MineralCounterApp() {
                   </div>
                   
                   <div className="flex items-start gap-3">
+                    <MousePointer className="h-5 w-5 text-indigo-600 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-sm">4. Reordenar Contadores</h4>
+                      <p className="text-xs text-muted-foreground">
+                        Arrastra los contadores por el ícono de grip para reordenarlos según tu preferencia (disponible en vista grid y lista).
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
                     <Save className="h-5 w-5 text-orange-600 mt-0.5 flex-shrink-0" />
                     <div>
-                      <h4 className="font-semibold text-sm">4. Exportar Datos</h4>
+                      <h4 className="font-semibold text-sm">5. Exportar Datos</h4>
                       <p className="text-xs text-muted-foreground">
                         Exporta tus conteos en formato JSON para análisis posterior o para compartir con colegas.
                       </p>
@@ -436,6 +473,17 @@ export default function MineralCounterApp() {
 
           {/* Main Content */}
           <div className="flex-1">
+            {/* Drag and drop hint */}
+            {counters.length > 1 && viewMode !== 'individual' && (
+              <div className="mb-4 p-3 bg-blue-50/80 dark:bg-blue-950/30 border border-blue-200/30 dark:border-blue-700/30 rounded-lg">
+                <div className="flex items-center gap-2 text-sm text-blue-700 dark:text-blue-300">
+                  <GripVertical className="h-4 w-4" />
+                  <span className="font-medium">Tip:</span>
+                  <span>Arrastra las tarjetas por el ícono de grip para reordenarlas</span>
+                </div>
+              </div>
+            )}
+            
             {counters.length === 0 ? (
               <Card className="text-center py-12" data-card>
                 <CardContent>
@@ -451,8 +499,8 @@ export default function MineralCounterApp() {
                 </CardContent>
               </Card>
             ) : (
-              <div className={getGridClassName()}>
-                {viewMode === 'individual' && counters.length > 0 ? (
+              viewMode === 'individual' && counters.length > 0 ? (
+                <div className={getGridClassName()}>
                   <CounterCard
                     counter={counters[0]}
                     onIncrement={() => incrementCounter(counters[0].id)}
@@ -462,21 +510,29 @@ export default function MineralCounterApp() {
                     onUpdate={(updates) => updateCounter(counters[0].id, updates)}
                     viewMode={viewMode}
                   />
-                ) : (
-                  counters.map(counter => (
-                    <CounterCard
+                </div>
+              ) : (
+                <DragDropContainer
+                  onDragEnd={handleDragEnd}
+                  droppableId="counters"
+                  className={getGridClassName()}
+                >
+                  {counters.map((counter, index) => (
+                    <DraggableCounterCard
                       key={counter.id}
                       counter={counter}
+                      index={index}
                       onIncrement={() => incrementCounter(counter.id)}
                       onDecrement={() => decrementCounter(counter.id)}
                       onReset={() => resetCounter(counter.id)}
                       onDelete={() => deleteCounter(counter.id)}
                       onUpdate={(updates) => updateCounter(counter.id, updates)}
                       viewMode={viewMode}
+                      isDragEnabled={counters.length > 1}
                     />
-                  ))
-                )}
-              </div>
+                  ))}
+                </DragDropContainer>
+              )
             )}
 
             {viewMode === 'individual' && counters.length > 1 && (
