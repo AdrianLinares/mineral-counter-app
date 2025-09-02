@@ -59,8 +59,16 @@ export default function MineralCounterApp() {
     totalCount
   } = useCounters();
 
-  const handleAddCounter = (mineralName: string, color: string) => {
-    addCounter(mineralName, color);
+  const handleAddCounter = (
+    mineralName: string, 
+    color: string, 
+    grainSize?: {
+      category: 'sedimentarias' | 'igneas';
+      term: string;
+      description: string;
+    }
+  ) => {
+    addCounter(mineralName, color, grainSize);
     toast({
       title: "Contador agregado",
       description: `Se agregó el contador para ${mineralName}`,

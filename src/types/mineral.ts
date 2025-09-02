@@ -12,6 +12,11 @@ export interface Counter {
   increment: number;
   maxValue?: number;
   color: string;
+  grainSize?: {
+    category: 'sedimentarias' | 'igneas';
+    term: string;
+    description: string;
+  };
   createdAt: Date;
 }
 
@@ -437,3 +442,35 @@ export const COUNTER_COLORS = [
   '#3b82f6', '#ef4444', '#10b981', '#f59e0b', 
   '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'
 ];
+
+export interface GrainSizeTerm {
+  term: string;
+  description: string;
+}
+
+export const GRAIN_SIZE_DATABASE: Record<string, GrainSizeTerm[]> = {
+  tamano_de_grano_sedimentarias: [
+    { term: "Arcilla", description: "< 0.004 mm (< 4 μm)" },
+    { term: "Limo", description: "0.004 - 0.063 mm (4 - 63 μm)" },
+    { term: "Arena muy fina", description: "0.063 - 0.125 mm (63 - 125 μm)" },
+    { term: "Arena fina", description: "0.125 - 0.25 mm (125 - 250 μm)" },
+    { term: "Arena media", description: "0.25 - 0.5 mm (250 - 500 μm)" },
+    { term: "Arena gruesa", description: "0.5 - 1 mm (500 - 1000 μm)" },
+    { term: "Arena muy gruesa", description: "1 - 2 mm (1000 - 2000 μm)" },
+    { term: "Gránulo", description: "2 - 4 mm" },
+    { term: "Guijarro pequeño", description: "4 - 16 mm" },
+    { term: "Guijarro grande", description: "16 - 64 mm" },
+    { term: "Canto rodado", description: "64 - 256 mm" },
+    { term: "Bloque", description: "> 256 mm" }
+  ],
+
+  tamano_de_grano_igneas: [
+    { term: "Afanítico", description: "< 0.1 mm (< 100 μm) - Cristales no visibles a simple vista" },
+    { term: "Fanerítico fino", description: "0.1 - 1 mm (100 - 1000 μm) - Cristales pequeños visibles" },
+    { term: "Fanerítico medio", description: "1 - 5 mm - Cristales de tamaño medio" },
+    { term: "Fanerítico grueso", description: "5 - 30 mm - Cristales grandes" },
+    { term: "Pegmatítico", description: "> 30 mm - Cristales muy grandes" },
+    { term: "Vítreo", description: "Sin cristales - Textura vítrea" },
+    { term: "Porfídico", description: "Fenocristales > 2 mm en matriz afanítica" }
+  ]
+};

@@ -5,9 +5,10 @@ import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Minus, Plus, Settings, RotateCcw, Trash2 } from 'lucide-react';
+import { Minus, Plus, Settings, RotateCcw, Trash2, Ruler } from 'lucide-react';
 import { Counter } from '@/types/mineral';
 import { COUNTER_COLORS } from '@/types/mineral';
+import { GrainSizeSelector } from './GrainSizeSelector';
 
 interface CounterCardProps {
   counter: Counter;
@@ -32,12 +33,18 @@ export const CounterCard = ({
   const [editIncrement, setEditIncrement] = useState(counter.increment.toString());
   const [editMaxValue, setEditMaxValue] = useState(counter.maxValue?.toString() || '');
   const [editColor, setEditColor] = useState(counter.color);
+  const [editGrainSize, setEditGrainSize] = useState<{
+    category: 'sedimentarias' | 'igneas';
+    term: string;
+    description: string;
+  } | undefined>(counter.grainSize);
 
   // Agregar esta función para resetear los valores
   const resetEditValues = () => {
     setEditIncrement(counter.increment.toString());
     setEditMaxValue(counter.maxValue?.toString() || '');
     setEditColor(counter.color);
+    setEditGrainSize(counter.grainSize);
   };
 
   // Modificar la función que controla el diálogo
@@ -52,7 +59,8 @@ export const CounterCard = ({
     onUpdate({
       increment: Math.max(1, parseInt(editIncrement) || 1),
       maxValue: editMaxValue ? parseInt(editMaxValue) : undefined,
-      color: editColor
+      color: editColor,
+      grainSize: editGrainSize
     });
     setSettingsOpen(false);
   };
@@ -75,6 +83,12 @@ export const CounterCard = ({
             <div className="text-sm text-muted-foreground">
               Incremento: {counter.increment}
               {counter.maxValue && ` | Máximo: ${counter.maxValue}`}
+              {counter.grainSize && (
+                <div className="flex items-center gap-1 mt-1">
+                  <Ruler className="h-3 w-3" />
+                  <span>{counter.grainSize.term} ({counter.grainSize.category})</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -149,6 +163,16 @@ export const CounterCard = ({
                     ))}
                   </div>
                 </div>
+                <div>
+                  <Label>Tamaño de Grano</Label>
+                  <div className="mt-2">
+                    <GrainSizeSelector
+                      currentGrainSize={editGrainSize}
+                      onSelect={setEditGrainSize}
+                      onClear={() => setEditGrainSize(undefined)}
+                    />
+                  </div>
+                </div>
                 <div className="flex justify-between">
                   <div className="flex gap-2">
                     <Button variant="outline" onClick={onReset}>
@@ -190,7 +214,17 @@ export const CounterCard = ({
               className="w-3 h-3 rounded-full"
               style={{ backgroundColor: counter.color }}
             />
-            <h3 className="font-semibold text-sm text-foreground">{counter.mineralName}</h3>
+            <div>
+              <h3 className="font-semibold text-sm text-foreground">{counter.mineralName}</h3>
+              {counter.grainSize && (
+                <div className="flex items-center gap-1 mt-1">
+                  <Ruler className="h-3 w-3 text-muted-foreground" />
+                  <span className="text-xs text-muted-foreground">
+                    {counter.grainSize.term}
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
           <div className="flex gap-1">
             <Dialog open={settingsOpen} onOpenChange={handleDialogChange}>
@@ -238,6 +272,16 @@ export const CounterCard = ({
                           style={{ backgroundColor: color }}
                         />
                       ))}
+                    </div>
+                  </div>
+                  <div>
+                    <Label>Tamaño de Grano</Label>
+                    <div className="mt-2">
+                      <GrainSizeSelector
+                        currentGrainSize={editGrainSize}
+                        onSelect={setEditGrainSize}
+                        onClear={() => setEditGrainSize(undefined)}
+                      />
                     </div>
                   </div>
                   <div className="flex justify-between">

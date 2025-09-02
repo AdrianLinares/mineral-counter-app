@@ -7,11 +7,20 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ChevronDown, ChevronRight, Search } from 'lucide-react';
 import { MINERAL_DATABASE, TEXTURE_DATABASE, COUNTER_COLORS } from '@/types/mineral';
+import { GrainSizeSelector } from './GrainSizeSelector';
 
 interface MineralSelectorProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSelect: (mineralName: string, color: string) => void;
+  onSelect: (
+    mineralName: string, 
+    color: string, 
+    grainSize?: {
+      category: 'sedimentarias' | 'igneas';
+      term: string;
+      description: string;
+    }
+  ) => void;
   usedColors: string[];
 }
 
@@ -20,6 +29,11 @@ export const MineralSelector = ({ open, onOpenChange, onSelect, usedColors }: Mi
   const [openCategories, setOpenCategories] = useState<string[]>([]);
   const [openTextureCategories, setOpenTextureCategories] = useState<string[]>([]);
   const [selectedColor, setSelectedColor] = useState<string>('');
+  const [selectedGrainSize, setSelectedGrainSize] = useState<{
+    category: 'sedimentarias' | 'igneas';
+    term: string;
+    description: string;
+  } | undefined>();
 
   const toggleCategory = (category: string) => {
     setOpenCategories(prev => 
@@ -44,10 +58,11 @@ export const MineralSelector = ({ open, onOpenChange, onSelect, usedColors }: Mi
 
   const handleSelect = (mineralName: string) => {
     const color = selectedColor || getAvailableColor();
-    onSelect(mineralName, color);
+    onSelect(mineralName, color, selectedGrainSize);
     onOpenChange(false);
     setSearchTerm('');
     setSelectedColor('');
+    setSelectedGrainSize(undefined);
   };
 
   const categoryNames: Record<string, string> = {
@@ -141,6 +156,20 @@ export const MineralSelector = ({ open, onOpenChange, onSelect, usedColors }: Mi
             {selectedColor && (
               <div className="text-xs text-gray-600">
                 Color seleccionado: <Badge style={{ backgroundColor: selectedColor, color: 'white' }}>●</Badge>
+              </div>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <div className="text-sm font-medium">Tamaño de grano (opcional):</div>
+            <GrainSizeSelector
+              currentGrainSize={selectedGrainSize}
+              onSelect={setSelectedGrainSize}
+              onClear={() => setSelectedGrainSize(undefined)}
+            />
+            {selectedGrainSize && (
+              <div className="text-xs text-gray-600">
+                Tamaño seleccionado: <Badge variant="outline">{selectedGrainSize.term}</Badge>
               </div>
             )}
           </div>

@@ -26,13 +26,22 @@ export const useCounters = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(counters));
   }, [counters]);
 
-  const addCounter = (mineralName: string, color: string) => {
+  const addCounter = (
+    mineralName: string, 
+    color: string, 
+    grainSize?: {
+      category: 'sedimentarias' | 'igneas';
+      term: string;
+      description: string;
+    }
+  ) => {
     const newCounter: Counter = {
       id: uuidv4(),
       mineralName,
       value: 0,
       increment: 1,
       color,
+      grainSize,
       createdAt: new Date()
     };
     setCounters(prev => [...prev, newCounter]);
@@ -88,6 +97,7 @@ export const useCounters = () => {
         increment: counter.increment,
         maxValue: counter.maxValue,
         color: counter.color,
+        grainSize: counter.grainSize,
         createdAt: counter.createdAt.toISOString()
       }))
     };
@@ -105,6 +115,7 @@ export const useCounters = () => {
           increment: c.increment || 1,
           maxValue: c.maxValue,
           color: c.color || '#3b82f6',
+          grainSize: c.grainSize,
           createdAt: new Date(c.createdAt || new Date())
         }));
         setCounters(prev => [...prev, ...importedCounters]);
