@@ -450,18 +450,28 @@ export interface GrainSizeTerm {
 
 export const GRAIN_SIZE_DATABASE: Record<string, GrainSizeTerm[]> = {
   tamano_de_grano_sedimentarias: [
-    { term: "Arcilla", description: "< 0.004 mm (< 4 μm)" },
-    { term: "Limo", description: "0.004 - 0.063 mm (4 - 63 μm)" },
-    { term: "Arena muy fina", description: "0.063 - 0.125 mm (63 - 125 μm)" },
+    { term: "Arcilla", description: "< 0.002 mm (< 2 μm)" },
+    { term: "Limo muy fino", description: "0.002 - 0.004 mm (2 - 4 μm)" },
+    { term: "Limo fino", description: "0.004 - 0.008 mm (4 - 8 μm)" },
+    { term: "Limo medio", description: "0.008 - 0.016 mm (8 - 16 μm)" },
+    { term: "Limo grueso", description: "0.016 - 0.031 mm (16 - 31 μm)" },
+    { term: "Limo muy grueso", description: "0.031 - 0.062 mm (31 - 62 μm)" },
+    { term: "Arena muy fina", description: "0.062 - 0.125 mm (62 - 125 μm)" },
     { term: "Arena fina", description: "0.125 - 0.25 mm (125 - 250 μm)" },
     { term: "Arena media", description: "0.25 - 0.5 mm (250 - 500 μm)" },
     { term: "Arena gruesa", description: "0.5 - 1 mm (500 - 1000 μm)" },
     { term: "Arena muy gruesa", description: "1 - 2 mm (1000 - 2000 μm)" },
     { term: "Gránulo", description: "2 - 4 mm" },
-    { term: "Guijarro pequeño", description: "4 - 16 mm" },
-    { term: "Guijarro grande", description: "16 - 64 mm" },
-    { term: "Canto rodado", description: "64 - 256 mm" },
-    { term: "Bloque", description: "> 256 mm" }
+    { term: "Guijarro fino", description: "4 - 8 mm" },
+    { term: "Guijarro medio", description: "8 - 16 mm" },
+    { term: "Guijarro grueso", description: "16 - 32 mm" },
+    { term: "Guijarro muy grueso", description: "32 - 64 mm" },
+    { term: "Guijarro pequeño (general)", description: "4 - 64 mm" },
+    { term: "Guijarro grande", description: "64 - 128 mm" },
+    { term: "Canto rodado pequeño", description: "128 - 256 mm" },
+    { term: "Canto rodado medio", description: "256 - 512 mm" },
+    { term: "Canto rodado grande", description: "512 - 1024 mm" },
+    { term: "Bloque muy grande", description: "> 1024 mm" }
   ],
 
   tamano_de_grano_igneas: [
@@ -471,6 +481,18 @@ export const GRAIN_SIZE_DATABASE: Record<string, GrainSizeTerm[]> = {
     { term: "Fanerítico grueso", description: "5 - 30 mm - Cristales grandes" },
     { term: "Pegmatítico", description: "> 30 mm - Cristales muy grandes" },
     { term: "Vítreo", description: "Sin cristales - Textura vítrea" },
-    { term: "Porfídico", description: "Fenocristales > 2 mm en matriz afanítica" }
+    { term: "Porfídico", description: "Fenocristales > 2 mm en matriz afanítica" },
+    { term: "Ceniza extremadamente fina", description: "< 0.004 mm (< 4 μm)" },
+    { term: "Ceniza muy fina", description: "0.062 - 0.125 mm (62 - 125 μm)" },
+    { term: "Ceniza fina", description: "0.125 - 0.25 mm (125 - 250 μm)" },
+    { term: "Ceniza media", description: "0.25 - 0.5 mm (250 - 500 μm)" },
+    { term: "Ceniza gruesa", description: "0.5 - 1 mm (500 - 1000 μm)" },
+    { term: "Ceniza muy gruesa", description: "1 - 2 mm (1000 - 2000 μm)" },
+    { term: "Lapilli fino", description: "2 - 4 mm" },
+    { term: "Lapilli medio", description: "4 - 8 mm" },
+    { term: "Lapilli grueso", description: "8 - 32 mm" },
+    { term: "Bloque/Bomba fino", description: "32 - 128 mm" },
+    { term: "Bloque/Bomba medio", description: "128 - 512 mm" },
+    { term: "Bloque/Bomba grueso", description: "> 512 mm" }
   ]
 };
