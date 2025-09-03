@@ -585,10 +585,10 @@ export interface PackingTerm {
 }
 
 export const PACKING_DATABASE: Record<string, PackingTerm[]> = {
-  madurez_textural: [
-    { term: "Inmaduro", description: "< 5% matriz arcillosa, granos angulares, mal sorteado" },
-    { term: "Submaduro", description: "< 5% matriz, granos subangulares a subredondeados, moderadamente sorteado" },
-    { term: "Maduro", description: "< 5% matriz, granos subredondeados a redondeados, bien sorteado" },
-    { term: "Supermaduro", description: "< 5% matriz, granos bien redondeados, muy bien sorteado" }
+  empaquetamiento: [
+    { term: "Cúbico", description: "Porosidad teórica ~48% - Empaquetamiento más suelto" },
+    { term: "Ortorrómbico", description: "Porosidad teórica ~40% - Empaquetamiento intermedio" },
+    { term: "Tetragonal", description: "Porosidad teórica ~30% - Empaquetamiento denso" },
+    { term: "Romboédrico", description: "Porosidad teórica ~26% - Empaquetamiento más denso" }
   ]
 };
