@@ -408,9 +408,9 @@ export default function MineralCounterApp() {
                   <div className="flex items-start gap-3">
                     <Search className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
                     <div>
-                      <h4 className="font-semibold text-sm">2. Buscar y Seleccionar</h4>
+                      <h4 className="font-semibold text-sm">2. Caracterización Completa</h4>
                       <p className="text-xs text-muted-foreground">
-                        Usa las pestañas "Minerales" y "Texturas" para encontrar lo que necesitas. Busca por nombre o descripción.
+                        Selecciona color, tamaño de grano y características texturales sedimentarias (esfericidad, redondez, contactos, sorteo, madurez y empaquetamiento).
                       </p>
                     </div>
                   </div>
@@ -418,9 +418,9 @@ export default function MineralCounterApp() {
                   <div className="flex items-start gap-3">
                     <Target className="h-5 w-5 text-purple-600 mt-0.5 flex-shrink-0" />
                     <div>
-                      <h4 className="font-semibold text-sm">3. Contar Observaciones</h4>
+                      <h4 className="font-semibold text-sm">3. Buscar y Seleccionar</h4>
                       <p className="text-xs text-muted-foreground">
-                        Usa los botones +/- para contar cada observación. Personaliza el incremento y valor máximo si es necesario.
+                        Usa las pestañas "Minerales" y "Texturas" para encontrar lo que necesitas. Busca por nombre, fórmula o descripción.
                       </p>
                     </div>
                   </div>
@@ -428,7 +428,17 @@ export default function MineralCounterApp() {
                   <div className="flex items-start gap-3">
                     <MousePointer className="h-5 w-5 text-indigo-600 mt-0.5 flex-shrink-0" />
                     <div>
-                      <h4 className="font-semibold text-sm">4. Reordenar Contadores</h4>
+                      <h4 className="font-semibold text-sm">4. Contar y Personalizar</h4>
+                      <p className="text-xs text-muted-foreground">
+                        Usa los botones +/- para contar observaciones. Configura incremento, valor máximo y características texturales desde el menú de configuración.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <GripVertical className="h-5 w-5 text-teal-600 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-sm">5. Reordenar Contadores</h4>
                       <p className="text-xs text-muted-foreground">
                         Arrastra los contadores por el ícono de grip para reordenarlos según tu preferencia (disponible en vista grid y lista).
                       </p>
@@ -438,9 +448,9 @@ export default function MineralCounterApp() {
                   <div className="flex items-start gap-3">
                     <Save className="h-5 w-5 text-orange-600 mt-0.5 flex-shrink-0" />
                     <div>
-                      <h4 className="font-semibold text-sm">5. Exportar Datos</h4>
+                      <h4 className="font-semibold text-sm">6. Exportar y Compartir</h4>
                       <p className="text-xs text-muted-foreground">
-                        Exporta tus conteos en formato JSON para análisis posterior o para compartir con colegas.
+                        Exporta tus conteos con todas las características texturales en formato JSON para análisis posterior o para compartir con colegas.
                       </p>
                     </div>
                   </div>
@@ -455,28 +465,28 @@ export default function MineralCounterApp() {
                     <div className="bg-gradient-to-r from-emerald-50/80 to-green-50/80 dark:from-emerald-950/20 dark:to-green-950/20 p-3 rounded-lg border border-emerald-200/30 dark:border-emerald-700/30">
                       <h4 className="font-semibold text-xs text-emerald-700 dark:text-emerald-300">🔬 Análisis Modal</h4>
                       <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-1">
-                        Conteo de minerales para determinar composición modal de rocas ígneas, sedimentarias y metamórficas.
+                        Conteo de minerales para determinar composición modal de rocas ígneas, sedimentarias y metamórficas con caracterización textural completa.
                       </p>
                     </div>
                     
                     <div className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 dark:from-blue-950/20 dark:to-indigo-950/20 p-3 rounded-lg border border-blue-200/30 dark:border-blue-700/30">
-                      <h4 className="font-semibold text-xs text-blue-700 dark:text-blue-300">📊 Estudios Petrográficos</h4>
+                      <h4 className="font-semibold text-xs text-blue-700 dark:text-blue-300">📊 Análisis Sedimentológico</h4>
                       <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">
-                        Análisis cuantitativo de texturas y estructuras para caracterización petrológica detallada.
+                        Caracterización cuantitativa de propiedades texturales: esfericidad, redondez, contactos, sorteo, madurez textural y empaquetamiento.
                       </p>
                     </div>
                     
                     <div className="bg-gradient-to-r from-purple-50/80 to-violet-50/80 dark:from-purple-950/20 dark:to-violet-950/20 p-3 rounded-lg border border-purple-200/30 dark:border-purple-700/30">
                       <h4 className="font-semibold text-xs text-purple-700 dark:text-purple-300">🎓 Enseñanza</h4>
                       <p className="text-xs text-purple-600 dark:text-purple-400 mt-1">
-                        Herramienta educativa para estudiantes de geología, petrología y mineralogía en prácticas de laboratorio.
+                        Herramienta educativa para estudiantes de geología, petrología, mineralogía y sedimentología en prácticas de laboratorio.
                       </p>
                     </div>
                     
                     <div className="bg-gradient-to-r from-amber-50/80 to-yellow-50/80 dark:from-amber-950/20 dark:to-yellow-950/20 p-3 rounded-lg border border-amber-200/30 dark:border-amber-700/30">
                       <h4 className="font-semibold text-xs text-amber-700 dark:text-amber-300">⛏️ Investigación</h4>
                       <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">
-                        Investigación académica y profesional en ciencias de la Tierra que requiere análisis cuantitativo microscópico.
+                        Investigación académica y profesional en ciencias de la Tierra con análisis cuantitativo microscópico y caracterización textural detallada.
                       </p>
                     </div>
                   </div>

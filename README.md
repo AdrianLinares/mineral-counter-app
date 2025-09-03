@@ -5,7 +5,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.11-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
 [![Vite](https://img.shields.io/badge/Vite-5.4.1-646CFF?style=for-the-badge&logo=vite)](https://vitejs.dev/)
 
-Una aplicación web profesional especializada para el conteo cuantitativo de minerales y análisis textural en secciones delgadas petrográficas. Diseñada específicamente para geólogos, investigadores, y estudiantes de petrología y mineralogía.
+Una aplicación web profesional especializada para el conteo cuantitativo de minerales y análisis textural avanzado en secciones delgadas petrográficas. Incluye caracterización completa de propiedades texturales sedimentarias. Diseñada específicamente para geólogos, sedimentólogos, investigadores, y estudiantes de petrología y mineralogía.
 
 ## ✨ Características Principales
 
@@ -39,13 +39,22 @@ Una aplicación web profesional especializada para el conteo cuantitativo de min
 - **Estructuras Sedimentarias**: Estratificación, Laminación, Bioturbación
 - **Alteraciones Diagenéticas**: Compactación, Cementación, Disolución, Neomorfismo
 
+### 🧪 Análisis Textural Sedimentario Avanzado
+- **Esfericidad**: Clasificación cuantitativa de la forma geométrica de partículas
+- **Redondez**: Análisis del grado de redondez de bordes y esquinas de granos
+- **Tipos de Contacto**: Caracterización de contactos intergranulares (puntual, largo, cóncavo-convexo, suturado)
+- **Grado de Sorteo**: Evaluación de la selección granulométrica y distribución de tamaños
+- **Madurez Textural**: Determinación del grado de madurez textural de rocas sedimentarias
+- **Empaquetamiento**: Análisis de densidad y arreglo espacial de granos
+- **Tamaño de Grano**: Clasificación detallada para rocas sedimentarias e ígneas
+
 ### 🎛️ Sistema de Contadores Avanzado
 - **Contadores Ilimitados**: Crea tantos contadores como necesites
-- **Información Detallada**: Fórmula química, sistema cristalino, categoría
-- **Colores Personalizables**: 8 colores disponibles para organización visual
+- **Caracterización Completa**: Fórmula química, sistema cristalino, propiedades texturales
+- **Colores Personalizables**: 12 colores disponibles para organización visual
 - **Configuración Flexible**: Incrementos personalizables (1, 5, 10, etc.)
 - **Límites Configurables**: Establece valores máximos por contador
-- **Persistencia Automática**: Guardado automático en tiempo real
+- **Persistencia Automática**: Guardado automático con todas las características texturales
 
 ### 📱 Interfaz de Usuario Moderna
 - **Diseño Responsivo**: Optimizado para escritorio, tablet y móvil
@@ -61,10 +70,10 @@ Una aplicación web profesional especializada para el conteo cuantitativo de min
 
 ### 💾 Gestión de Datos Profesional
 - **Almacenamiento Local**: Sin necesidad de servidor, datos seguros localmente
-- **Exportación JSON**: Formato estándar para análisis estadístico posterior
-- **Importación de Datos**: Recupera sesiones previas o comparte entre colegas
+- **Exportación JSON Completa**: Incluye todas las características texturales y metadatos
+- **Importación de Datos**: Recupera sesiones previas con toda la caracterización textural
 - **Funciones de Respaldo**: Reinicio y eliminación masiva con confirmación
-- **Metadatos Incluidos**: Fecha de exportación e información de sesión
+- **Metadatos Incluidos**: Fecha de exportación, información de sesión y propiedades texturales
 
 ## 🚀 Inicio Rápido
 
@@ -113,15 +122,19 @@ npm run preview  # Previsualizar build
 - Usa la **barra de búsqueda** para encontrar rápidamente elementos específicos
 - Expande las **categorías colapsables** para navegar por tipo
 - Selecciona un **color** para organización visual
+- **[NUEVO]** Configura **tamaño de grano** (opcional)
+- **[NUEVO]** Asigna **características texturales sedimentarias** (esfericidad, redondez, contactos, sorteo, madurez, empaquetamiento)
 - Haz clic en el elemento deseado para crear el contador
 
-### 2️⃣ Contar Observaciones
+### 2️⃣ Contar y Caracterizar
 - Usa los **botones +/-** para incrementar/decrementar cada observación
-- **Clic izquierdo** en el contador para incrementar rápidamente
-- Accede a **configuraciones** para personalizar:
+- **Visualización de iconos** para identificar características texturales asignadas
+- Accede a **configuraciones avanzadas** para personalizar:
   - Incremento por clic (1, 5, 10, etc.)
   - Valor máximo del contador
   - Color del contador
+  - **[NUEVO]** Todas las propiedades texturales sedimentarias
+  - **[NUEVO]** Tamaño de grano específico
 
 ### 3️⃣ Gestionar Vistas
 - **Vista Cuadrícula**: Ideal para monitoreo múltiple simultáneo
@@ -137,16 +150,22 @@ npm run preview  # Previsualizar build
 ## 🎯 Casos de Uso Profesionales
 
 ### 🔬 **Análisis Modal Cuantitativo**
-- **Objetivo**: Determinación de composición modal porcentual
-- **Método**: Conteo de puntos sistemático (Point Counting)
-- **Aplicación**: Clasificación petrográfica según IUGS
-- **Ventaja**: Registro automático con metadatos temporales
+- **Objetivo**: Determinación de composición modal porcentual con caracterización textural
+- **Método**: Conteo de puntos sistemático (Point Counting) + análisis textural integrado
+- **Aplicación**: Clasificación petrográfica según IUGS con propiedades texturales
+- **Ventaja**: Registro automático con metadatos temporales y caracterización completa
 
-### 📊 **Estudios Petrográficos Detallados**
-- **Objetivo**: Análisis textural y estructural cuantitativo
-- **Método**: Clasificación simultánea de minerales y texturas
-- **Aplicación**: Caracterización petrológica integral
-- **Ventaja**: Base de datos unificada con terminología estándar
+### 📊 **Análisis Sedimentológico Avanzado**
+- **Objetivo**: Caracterización textural cuantitativa de rocas sedimentarias
+- **Método**: Análisis sistemático de 6 propiedades texturales principales
+- **Aplicación**: Estudios de proveniencia, ambiente deposicional y diagénesis
+- **Ventaja**: Base de datos especializada con terminología sedimentológica estándar
+
+### 🔍 **Estudios Petrográficos Detallados**
+- **Objetivo**: Análisis textural y estructural cuantitativo integrado
+- **Método**: Clasificación simultánea de minerales, texturas y características sedimentarias
+- **Aplicación**: Caracterización petrológica y sedimentológica integral
+- **Ventaja**: Herramienta unificada para análisis petrográfico completo
 
 ### 🎓 **Enseñanza y Formación Académica**
 - **Objetivo**: Herramienta educativa para reconocimiento mineral
@@ -199,6 +218,35 @@ npm run preview  # Previsualizar build
       "increment": 1,
       "maxValue": 100,
       "color": "#3b82f6",
+      "grainSize": {
+        "category": "sedimentarias",
+        "term": "Arena media",
+        "description": "0.25 - 0.50 mm"
+      },
+      "sphericity": {
+        "term": "Alta",
+        "description": "Partículas muy esféricas"
+      },
+      "roundness": {
+        "term": "Redondeado",
+        "description": "Bordes completamente redondeados"
+      },
+      "contacts": {
+        "term": "Puntual",
+        "description": "Contacto en puntos específicos"
+      },
+      "sorting": {
+        "term": "Bien sorteado",
+        "description": "Distribución homogénea de tamaños"
+      },
+      "maturity": {
+        "term": "Maduro",
+        "description": "Alta madurez textural"
+      },
+      "packing": {
+        "term": "Denso",
+        "description": "Empaquetamiento compacto"
+      },
       "createdAt": "2024-01-15T09:00:00.000Z"
     }
   ]
