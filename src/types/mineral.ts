@@ -475,6 +475,9 @@ export const GRAIN_SIZE_DATABASE: Record<string, GrainSizeTerm[]> = {
   ],
 
   tamano_de_grano_igneas: [
+    { term: "Microcristal", description: "0.01 - 0.40 mm (10 - 400 μm)" },
+    { term: "Microfenocristal", description: "0.50 - 1.0 mm (500 - 1000 μm)" },
+    { term: "Fenocristal", description: "2.0 - 10.0 mm (2000 - 10000 μm)" },
     { term: "Afanítico", description: "< 0.1 mm (< 100 μm) - Cristales no visibles a simple vista" },
     { term: "Fanerítico fino", description: "0.1 - 1 mm (100 - 1000 μm) - Cristales pequeños visibles" },
     { term: "Fanerítico medio", description: "1 - 5 mm - Cristales de tamaño medio" },
@@ -494,5 +497,98 @@ export const GRAIN_SIZE_DATABASE: Record<string, GrainSizeTerm[]> = {
     { term: "Bloque/Bomba fino", description: "32 - 128 mm" },
     { term: "Bloque/Bomba medio", description: "128 - 512 mm" },
     { term: "Bloque/Bomba grueso", description: "> 512 mm" }
+  ]
+};
+
+export interface SphericityTerm {
+  term: string;
+  description: string;
+}
+
+export const SPHERICITY_DATABASE: Record<string, SphericityTerm[]> = {
+  esfericidad: [
+    { term: "Muy alta", description: "0.9 - 1.0 - Forma casi perfectamente esférica" },
+    { term: "Alta", description: "0.7 - 0.9 - Forma aproximadamente esférica" },
+    { term: "Media", description: "0.5 - 0.7 - Forma moderadamente esférica" },
+    { term: "Baja", description: "0.3 - 0.5 - Forma alargada o aplanada" },
+    { term: "Muy baja", description: "< 0.3 - Forma muy alargada o muy aplanada" }
+  ]
+};
+
+export interface RoundnessTerm {
+  term: string;
+  description: string;
+}
+
+export const ROUNDNESS_DATABASE: Record<string, RoundnessTerm[]> = {
+  redondez: [
+    { term: "Muy angular", description: "0.0 - 0.17 - Bordes y esquinas muy agudos" },
+    { term: "Angular", description: "0.17 - 0.25 - Bordes agudos con algunas esquinas redondeadas" },
+    { term: "Subangular", description: "0.25 - 0.35 - Esquinas moderadamente redondeadas" },
+    { term: "Subredondeado", description: "0.35 - 0.49 - Esquinas bien redondeadas, algunos bordes rectos" },
+    { term: "Redondeado", description: "0.49 - 0.70 - Bordes y esquinas bien redondeadas" },
+    { term: "Bien redondeado", description: "0.70 - 1.0 - Contorno suave y curvo" }
+  ]
+};
+
+export interface ContactsTerm {
+  term: string;
+  description: string;
+}
+
+export const CONTACTS_DATABASE: Record<string, ContactsTerm[]> = {
+  contactos: [
+    { term: "Flotante", description: "Sin contacto entre granos - Porosidad muy alta" },
+    { term: "Puntual", description: "Contacto en puntos aislados - Porosidad alta" },
+    { term: "Tangencial", description: "Contacto a lo largo de líneas cortas - Porosidad moderada" },
+    { term: "Largo", description: "Contacto a lo largo de superficies extensas - Porosidad baja" },
+    { term: "Cóncavo-convexo", description: "Deformación plástica en puntos de contacto - Porosidad muy baja" },
+    { term: "Suturado", description: "Interpenetración de granos por disolución - Porosidad mínima" },
+    { term: "Imbricado", description: "Granos orientados por flujo - Estructura direccional" }
+  ]
+};
+
+export interface SortingTerm {
+  term: string;
+  description: string;
+}
+
+export const SORTING_DATABASE: Record<string, SortingTerm[]> = {
+  sorteo: [
+    { term: "Muy bien sorteado", description: "σ < 0.35 - Granos muy uniformes en tamaño" },
+    { term: "Bien sorteado", description: "σ 0.35 - 0.50 - Granos uniformes" },
+    { term: "Moderadamente bien sorteado", description: "σ 0.50 - 0.71 - Ligera variación en tamaños" },
+    { term: "Moderadamente sorteado", description: "σ 0.71 - 1.0 - Variación moderada en tamaños" },
+    { term: "Pobremente sorteado", description: "σ 1.0 - 2.0 - Gran variación en tamaños" },
+    { term: "Muy pobremente sorteado", description: "σ 2.0 - 4.0 - Muy gran variación en tamaños" },
+    { term: "Extremadamente mal sorteado", description: "σ > 4.0 - Variación extrema en tamaños" }
+  ]
+};
+
+export interface MaturityTerm {
+  term: string;
+  description: string;
+}
+
+export const MATURITY_DATABASE: Record<string, MaturityTerm[]> = {
+  madurez_textural: [
+    { term: "Inmaduro", description: "< 5% matriz arcillosa, granos angulares, mal sorteado" },
+    { term: "Submaduro", description: "< 5% matriz, granos subangulares a subredondeados, moderadamente sorteado" },
+    { term: "Maduro", description: "< 5% matriz, granos subredondeados a redondeados, bien sorteado" },
+    { term: "Supermaduro", description: "< 5% matriz, granos bien redondeados, muy bien sorteado" }
+  ]
+};
+
+export interface PackingTerm {
+  term: string;
+  description: string;
+}
+
+export const PACKING_DATABASE: Record<string, PackingTerm[]> = {
+  madurez_textural: [
+    { term: "Inmaduro", description: "< 5% matriz arcillosa, granos angulares, mal sorteado" },
+    { term: "Submaduro", description: "< 5% matriz, granos subangulares a subredondeados, moderadamente sorteado" },
+    { term: "Maduro", description: "< 5% matriz, granos subredondeados a redondeados, bien sorteado" },
+    { term: "Supermaduro", description: "< 5% matriz, granos bien redondeados, muy bien sorteado" }
   ]
 };
