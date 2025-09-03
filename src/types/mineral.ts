@@ -17,6 +17,30 @@ export interface Counter {
     term: string;
     description: string;
   };
+  sphericity?: {
+    term: string;
+    description: string;
+  };
+  roundness?: {
+    term: string;
+    description: string;
+  };
+  contacts?: {
+    term: string;
+    description: string;
+  };
+  sorting?: {
+    term: string;
+    description: string;
+  };
+  maturity?: {
+    term: string;
+    description: string;
+  };
+  packing?: {
+    term: string;
+    description: string;
+  };
   createdAt: Date;
 }
 

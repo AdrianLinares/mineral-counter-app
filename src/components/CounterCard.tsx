@@ -5,10 +5,16 @@ import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Minus, Plus, Settings, RotateCcw, Trash2, Ruler } from 'lucide-react';
+import { Minus, Plus, Settings, RotateCcw, Trash2, Ruler, CircleDot, CornerDownLeft, Hand, ArrowUpDown, Target, Package } from 'lucide-react';
 import { Counter } from '@/types/mineral';
 import { COUNTER_COLORS } from '@/types/mineral';
 import { GrainSizeSelector } from './GrainSizeSelector';
+import { SphericitySelector } from './SphericitySelector';
+import { RoundnessSelector } from './RoundnessSelector';
+import { ContactsSelector } from './ContactsSelector';
+import { SortingSelector } from './SortingSelector';
+import { MaturitySelector } from './MaturitySelector';
+import { PackingSelector } from './PackingSelector';
 
 interface CounterCardProps {
   counter: Counter;
@@ -38,6 +44,12 @@ export const CounterCard = ({
     term: string;
     description: string;
   } | undefined>(counter.grainSize);
+  const [editSphericity, setEditSphericity] = useState<{ term: string; description: string; } | undefined>(counter.sphericity);
+  const [editRoundness, setEditRoundness] = useState<{ term: string; description: string; } | undefined>(counter.roundness);
+  const [editContacts, setEditContacts] = useState<{ term: string; description: string; } | undefined>(counter.contacts);
+  const [editSorting, setEditSorting] = useState<{ term: string; description: string; } | undefined>(counter.sorting);
+  const [editMaturity, setEditMaturity] = useState<{ term: string; description: string; } | undefined>(counter.maturity);
+  const [editPacking, setEditPacking] = useState<{ term: string; description: string; } | undefined>(counter.packing);
 
   // Agregar esta función para resetear los valores
   const resetEditValues = () => {
@@ -45,6 +57,12 @@ export const CounterCard = ({
     setEditMaxValue(counter.maxValue?.toString() || '');
     setEditColor(counter.color);
     setEditGrainSize(counter.grainSize);
+    setEditSphericity(counter.sphericity);
+    setEditRoundness(counter.roundness);
+    setEditContacts(counter.contacts);
+    setEditSorting(counter.sorting);
+    setEditMaturity(counter.maturity);
+    setEditPacking(counter.packing);
   };
 
   // Modificar la función que controla el diálogo
@@ -60,7 +78,13 @@ export const CounterCard = ({
       increment: Math.max(1, parseInt(editIncrement) || 1),
       maxValue: editMaxValue ? parseInt(editMaxValue) : undefined,
       color: editColor,
-      grainSize: editGrainSize
+      grainSize: editGrainSize,
+      sphericity: editSphericity,
+      roundness: editRoundness,
+      contacts: editContacts,
+      sorting: editSorting,
+      maturity: editMaturity,
+      packing: editPacking
     });
     setSettingsOpen(false);
   };
@@ -89,6 +113,44 @@ export const CounterCard = ({
                   <span>{counter.grainSize.term} ({counter.grainSize.category})</span>
                 </div>
               )}
+              <div className="flex flex-wrap gap-1 mt-1">
+                {counter.sphericity && (
+                  <div className="flex items-center gap-1">
+                    <CircleDot className="h-3 w-3" />
+                    <span className="text-xs">{counter.sphericity.term}</span>
+                  </div>
+                )}
+                {counter.roundness && (
+                  <div className="flex items-center gap-1">
+                    <CornerDownLeft className="h-3 w-3" />
+                    <span className="text-xs">{counter.roundness.term}</span>
+                  </div>
+                )}
+                {counter.contacts && (
+                  <div className="flex items-center gap-1">
+                    <Hand className="h-3 w-3" />
+                    <span className="text-xs">{counter.contacts.term}</span>
+                  </div>
+                )}
+                {counter.sorting && (
+                  <div className="flex items-center gap-1">
+                    <ArrowUpDown className="h-3 w-3" />
+                    <span className="text-xs">{counter.sorting.term}</span>
+                  </div>
+                )}
+                {counter.maturity && (
+                  <div className="flex items-center gap-1">
+                    <Target className="h-3 w-3" />
+                    <span className="text-xs">{counter.maturity.term}</span>
+                  </div>
+                )}
+                {counter.packing && (
+                  <div className="flex items-center gap-1">
+                    <Package className="h-3 w-3" />
+                    <span className="text-xs">{counter.packing.term}</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -173,6 +235,78 @@ export const CounterCard = ({
                     />
                   </div>
                 </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label>Esfericidad</Label>
+                    <div className="mt-2">
+                      <SphericitySelector
+                        currentSphericity={editSphericity}
+                        onSelect={setEditSphericity}
+                        onClear={() => setEditSphericity(undefined)}
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <Label>Redondez</Label>
+                    <div className="mt-2">
+                      <RoundnessSelector
+                        currentRoundness={editRoundness}
+                        onSelect={setEditRoundness}
+                        onClear={() => setEditRoundness(undefined)}
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label>Tipo de Contacto</Label>
+                    <div className="mt-2">
+                      <ContactsSelector
+                        currentContacts={editContacts}
+                        onSelect={setEditContacts}
+                        onClear={() => setEditContacts(undefined)}
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <Label>Sorteo</Label>
+                    <div className="mt-2">
+                      <SortingSelector
+                        currentSorting={editSorting}
+                        onSelect={setEditSorting}
+                        onClear={() => setEditSorting(undefined)}
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label>Madurez Textural</Label>
+                    <div className="mt-2">
+                      <MaturitySelector
+                        currentMaturity={editMaturity}
+                        onSelect={setEditMaturity}
+                        onClear={() => setEditMaturity(undefined)}
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <Label>Empaquetamiento</Label>
+                    <div className="mt-2">
+                      <PackingSelector
+                        currentPacking={editPacking}
+                        onSelect={setEditPacking}
+                        onClear={() => setEditPacking(undefined)}
+                      />
+                    </div>
+                  </div>
+                </div>
                 <div className="flex justify-between">
                   <div className="flex gap-2">
                     <Button variant="outline" onClick={onReset}>
@@ -224,6 +358,44 @@ export const CounterCard = ({
                   </span>
                 </div>
               )}
+              <div className="flex flex-wrap gap-1 mt-1 text-muted-foreground">
+                {counter.sphericity && (
+                  <div className="flex items-center gap-1">
+                    <CircleDot className="h-3 w-3" />
+                    <span className="text-xs">{counter.sphericity.term}</span>
+                  </div>
+                )}
+                {counter.roundness && (
+                  <div className="flex items-center gap-1">
+                    <CornerDownLeft className="h-3 w-3" />
+                    <span className="text-xs">{counter.roundness.term}</span>
+                  </div>
+                )}
+                {counter.contacts && (
+                  <div className="flex items-center gap-1">
+                    <Hand className="h-3 w-3" />
+                    <span className="text-xs">{counter.contacts.term}</span>
+                  </div>
+                )}
+                {counter.sorting && (
+                  <div className="flex items-center gap-1">
+                    <ArrowUpDown className="h-3 w-3" />
+                    <span className="text-xs">{counter.sorting.term}</span>
+                  </div>
+                )}
+                {counter.maturity && (
+                  <div className="flex items-center gap-1">
+                    <Target className="h-3 w-3" />
+                    <span className="text-xs">{counter.maturity.term}</span>
+                  </div>
+                )}
+                {counter.packing && (
+                  <div className="flex items-center gap-1">
+                    <Package className="h-3 w-3" />
+                    <span className="text-xs">{counter.packing.term}</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
           <div className="flex gap-1">
@@ -284,6 +456,79 @@ export const CounterCard = ({
                       />
                     </div>
                   </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label>Esfericidad</Label>
+                      <div className="mt-2">
+                        <SphericitySelector
+                          currentSphericity={editSphericity}
+                          onSelect={setEditSphericity}
+                          onClear={() => setEditSphericity(undefined)}
+                        />
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <Label>Redondez</Label>
+                      <div className="mt-2">
+                        <RoundnessSelector
+                          currentRoundness={editRoundness}
+                          onSelect={setEditRoundness}
+                          onClear={() => setEditRoundness(undefined)}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label>Tipo de Contacto</Label>
+                      <div className="mt-2">
+                        <ContactsSelector
+                          currentContacts={editContacts}
+                          onSelect={setEditContacts}
+                          onClear={() => setEditContacts(undefined)}
+                        />
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <Label>Sorteo</Label>
+                      <div className="mt-2">
+                        <SortingSelector
+                          currentSorting={editSorting}
+                          onSelect={setEditSorting}
+                          onClear={() => setEditSorting(undefined)}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label>Madurez Textural</Label>
+                      <div className="mt-2">
+                        <MaturitySelector
+                          currentMaturity={editMaturity}
+                          onSelect={setEditMaturity}
+                          onClear={() => setEditMaturity(undefined)}
+                        />
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <Label>Empaquetamiento</Label>
+                      <div className="mt-2">
+                        <PackingSelector
+                          currentPacking={editPacking}
+                          onSelect={setEditPacking}
+                          onClear={() => setEditPacking(undefined)}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  
                   <div className="flex justify-between">
                     <div className="flex gap-2">
                       <Button variant="outline" onClick={onReset}>

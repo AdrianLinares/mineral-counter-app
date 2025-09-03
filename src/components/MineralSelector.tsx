@@ -8,6 +8,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ChevronDown, ChevronRight, Search } from 'lucide-react';
 import { MINERAL_DATABASE, TEXTURE_DATABASE, COUNTER_COLORS } from '@/types/mineral';
 import { GrainSizeSelector } from './GrainSizeSelector';
+import { SphericitySelector } from './SphericitySelector';
+import { RoundnessSelector } from './RoundnessSelector';
+import { ContactsSelector } from './ContactsSelector';
+import { SortingSelector } from './SortingSelector';
+import { MaturitySelector } from './MaturitySelector';
+import { PackingSelector } from './PackingSelector';
 
 interface MineralSelectorProps {
   open: boolean;
@@ -19,7 +25,13 @@ interface MineralSelectorProps {
       category: 'sedimentarias' | 'igneas';
       term: string;
       description: string;
-    }
+    },
+    sphericity?: { term: string; description: string; },
+    roundness?: { term: string; description: string; },
+    contacts?: { term: string; description: string; },
+    sorting?: { term: string; description: string; },
+    maturity?: { term: string; description: string; },
+    packing?: { term: string; description: string; }
   ) => void;
   usedColors: string[];
 }
@@ -34,6 +46,12 @@ export const MineralSelector = ({ open, onOpenChange, onSelect, usedColors }: Mi
     term: string;
     description: string;
   } | undefined>();
+  const [selectedSphericity, setSelectedSphericity] = useState<{ term: string; description: string; } | undefined>();
+  const [selectedRoundness, setSelectedRoundness] = useState<{ term: string; description: string; } | undefined>();
+  const [selectedContacts, setSelectedContacts] = useState<{ term: string; description: string; } | undefined>();
+  const [selectedSorting, setSelectedSorting] = useState<{ term: string; description: string; } | undefined>();
+  const [selectedMaturity, setSelectedMaturity] = useState<{ term: string; description: string; } | undefined>();
+  const [selectedPacking, setSelectedPacking] = useState<{ term: string; description: string; } | undefined>();
 
   const toggleCategory = (category: string) => {
     setOpenCategories(prev => 
@@ -58,11 +76,17 @@ export const MineralSelector = ({ open, onOpenChange, onSelect, usedColors }: Mi
 
   const handleSelect = (mineralName: string) => {
     const color = selectedColor || getAvailableColor();
-    onSelect(mineralName, color, selectedGrainSize);
+    onSelect(mineralName, color, selectedGrainSize, selectedSphericity, selectedRoundness, selectedContacts, selectedSorting, selectedMaturity, selectedPacking);
     onOpenChange(false);
     setSearchTerm('');
     setSelectedColor('');
     setSelectedGrainSize(undefined);
+    setSelectedSphericity(undefined);
+    setSelectedRoundness(undefined);
+    setSelectedContacts(undefined);
+    setSelectedSorting(undefined);
+    setSelectedMaturity(undefined);
+    setSelectedPacking(undefined);
   };
 
   const categoryNames: Record<string, string> = {
@@ -172,6 +196,91 @@ export const MineralSelector = ({ open, onOpenChange, onSelect, usedColors }: Mi
                 Tamaño seleccionado: <Badge variant="outline">{selectedGrainSize.term}</Badge>
               </div>
             )}
+          </div>
+          
+          <div className="space-y-3">
+            <div className="text-sm font-medium">Características texturales sedimentarias (opcionales):</div>
+            
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <div className="text-xs font-medium mb-1">Esfericidad:</div>
+                <SphericitySelector
+                  currentSphericity={selectedSphericity}
+                  onSelect={setSelectedSphericity}
+                  onClear={() => setSelectedSphericity(undefined)}
+                />
+              </div>
+              
+              <div>
+                <div className="text-xs font-medium mb-1">Redondez:</div>
+                <RoundnessSelector
+                  currentRoundness={selectedRoundness}
+                  onSelect={setSelectedRoundness}
+                  onClear={() => setSelectedRoundness(undefined)}
+                />
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <div className="text-xs font-medium mb-1">Tipo de Contacto:</div>
+                <ContactsSelector
+                  currentContacts={selectedContacts}
+                  onSelect={setSelectedContacts}
+                  onClear={() => setSelectedContacts(undefined)}
+                />
+              </div>
+              
+              <div>
+                <div className="text-xs font-medium mb-1">Sorteo:</div>
+                <SortingSelector
+                  currentSorting={selectedSorting}
+                  onSelect={setSelectedSorting}
+                  onClear={() => setSelectedSorting(undefined)}
+                />
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <div className="text-xs font-medium mb-1">Madurez Textural:</div>
+                <MaturitySelector
+                  currentMaturity={selectedMaturity}
+                  onSelect={setSelectedMaturity}
+                  onClear={() => setSelectedMaturity(undefined)}
+                />
+              </div>
+              
+              <div>
+                <div className="text-xs font-medium mb-1">Empaquetamiento:</div>
+                <PackingSelector
+                  currentPacking={selectedPacking}
+                  onSelect={setSelectedPacking}
+                  onClear={() => setSelectedPacking(undefined)}
+                />
+              </div>
+            </div>
+            
+            <div className="flex flex-wrap gap-1 text-xs text-gray-600">
+              {selectedSphericity && (
+                <Badge variant="outline" className="text-xs">Esfericidad: {selectedSphericity.term}</Badge>
+              )}
+              {selectedRoundness && (
+                <Badge variant="outline" className="text-xs">Redondez: {selectedRoundness.term}</Badge>
+              )}
+              {selectedContacts && (
+                <Badge variant="outline" className="text-xs">Contacto: {selectedContacts.term}</Badge>
+              )}
+              {selectedSorting && (
+                <Badge variant="outline" className="text-xs">Sorteo: {selectedSorting.term}</Badge>
+              )}
+              {selectedMaturity && (
+                <Badge variant="outline" className="text-xs">Madurez: {selectedMaturity.term}</Badge>
+              )}
+              {selectedPacking && (
+                <Badge variant="outline" className="text-xs">Empaquetamiento: {selectedPacking.term}</Badge>
+              )}
+            </div>
           </div>
 
           <Tabs defaultValue="minerals" className="flex-1 overflow-hidden flex flex-col">

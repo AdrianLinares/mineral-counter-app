@@ -66,9 +66,15 @@ export default function MineralCounterApp() {
       category: 'sedimentarias' | 'igneas';
       term: string;
       description: string;
-    }
+    },
+    sphericity?: { term: string; description: string; },
+    roundness?: { term: string; description: string; },
+    contacts?: { term: string; description: string; },
+    sorting?: { term: string; description: string; },
+    maturity?: { term: string; description: string; },
+    packing?: { term: string; description: string; }
   ) => {
-    addCounter(mineralName, color, grainSize);
+    addCounter(mineralName, color, grainSize, sphericity, roundness, contacts, sorting, maturity, packing);
     toast({
       title: "Contador agregado",
       description: `Se agregó el contador para ${mineralName}`,

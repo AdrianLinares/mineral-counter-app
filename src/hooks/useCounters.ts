@@ -33,7 +33,13 @@ export const useCounters = () => {
       category: 'sedimentarias' | 'igneas';
       term: string;
       description: string;
-    }
+    },
+    sphericity?: { term: string; description: string; },
+    roundness?: { term: string; description: string; },
+    contacts?: { term: string; description: string; },
+    sorting?: { term: string; description: string; },
+    maturity?: { term: string; description: string; },
+    packing?: { term: string; description: string; }
   ) => {
     const newCounter: Counter = {
       id: uuidv4(),
@@ -42,6 +48,12 @@ export const useCounters = () => {
       increment: 1,
       color,
       grainSize,
+      sphericity,
+      roundness,
+      contacts,
+      sorting,
+      maturity,
+      packing,
       createdAt: new Date()
     };
     setCounters(prev => [...prev, newCounter]);
@@ -98,6 +110,12 @@ export const useCounters = () => {
         maxValue: counter.maxValue,
         color: counter.color,
         grainSize: counter.grainSize,
+        sphericity: counter.sphericity,
+        roundness: counter.roundness,
+        contacts: counter.contacts,
+        sorting: counter.sorting,
+        maturity: counter.maturity,
+        packing: counter.packing,
         createdAt: counter.createdAt.toISOString()
       }))
     };
@@ -116,6 +134,12 @@ export const useCounters = () => {
           maxValue: c.maxValue,
           color: c.color || '#3b82f6',
           grainSize: c.grainSize,
+          sphericity: c.sphericity,
+          roundness: c.roundness,
+          contacts: c.contacts,
+          sorting: c.sorting,
+          maturity: c.maturity,
+          packing: c.packing,
           createdAt: new Date(c.createdAt || new Date())
         }));
         setCounters(prev => [...prev, ...importedCounters]);
