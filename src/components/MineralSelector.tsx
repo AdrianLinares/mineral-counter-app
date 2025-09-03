@@ -146,150 +146,162 @@ export const MineralSelector = ({ open, onOpenChange, onSelect, usedColors }: Mi
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[80vh] overflow-hidden flex flex-col">
+      <DialogContent className="sm:max-w-2xl w-[90vw] max-h-[90vh] flex flex-col overflow-hidden">
         <DialogHeader>
           <DialogTitle>Seleccionar Mineral o Textura</DialogTitle>
         </DialogHeader>
         
-        <div className="space-y-4 flex-1 overflow-hidden flex flex-col">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-            <Input
-              placeholder="Buscar mineral, textura o descripción..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <div className="text-sm font-medium">Color del contador:</div>
-            <div className="flex gap-2 flex-wrap">
-              {COUNTER_COLORS.map(color => (
-                <button
-                  key={color}
-                  onClick={() => setSelectedColor(selectedColor === color ? '' : color)}
-                  className={`w-6 h-6 rounded-full border-2 ${
-                    selectedColor === color ? 'border-gray-800' : 'border-gray-300'
-                  } ${usedColors.includes(color) ? 'opacity-50' : ''}`}
-                  style={{ backgroundColor: color }}
-                  title={usedColors.includes(color) ? 'Color en uso' : 'Seleccionar color'}
-                />
-              ))}
+        {/* Update the main container div */}
+        <div className="flex flex-col flex-1 overflow-hidden min-h-0">
+          {/* Search and settings container - make it scrollable if needed */}
+          <div className="space-y-4 overflow-y-auto pr-2 flex-shrink-0 max-h-[40vh]">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Input
+                placeholder="Buscar mineral, textura o descripción..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
             </div>
-            {selectedColor && (
-              <div className="text-xs text-gray-600">
-                Color seleccionado: <Badge style={{ backgroundColor: selectedColor, color: 'white' }}>●</Badge>
-              </div>
-            )}
-          </div>
 
-          <div className="space-y-2">
-            <div className="text-sm font-medium">Tamaño de grano (opcional):</div>
-            <GrainSizeSelector
-              currentGrainSize={selectedGrainSize}
-              onSelect={setSelectedGrainSize}
-              onClear={() => setSelectedGrainSize(undefined)}
-            />
-            {selectedGrainSize && (
-              <div className="text-xs text-gray-600">
-                Tamaño seleccionado: <Badge variant="outline">{selectedGrainSize.term}</Badge>
+            {/* Color selector */}
+            <div className="space-y-2">
+              <div className="text-sm font-medium">Color del contador:</div>
+              <div className="flex gap-2 flex-wrap">
+                {COUNTER_COLORS.map(color => (
+                  <button
+                    key={color}
+                    onClick={() => setSelectedColor(selectedColor === color ? '' : color)}
+                    className={`w-6 h-6 rounded-full border-2 ${
+                      selectedColor === color ? 'border-gray-800' : 'border-gray-300'
+                    } ${usedColors.includes(color) ? 'opacity-50' : ''}`}
+                    style={{ backgroundColor: color }}
+                    title={usedColors.includes(color) ? 'Color en uso' : 'Seleccionar color'}
+                  />
+                ))}
               </div>
-            )}
-          </div>
-          
-          <div className="space-y-3">
-            <div className="text-sm font-medium">Características texturales sedimentarias (opcionales):</div>
+              {selectedColor && (
+                <div className="text-xs text-gray-600">
+                  Color seleccionado: <Badge style={{ backgroundColor: selectedColor, color: 'white' }}>●</Badge>
+                </div>
+              )}
+            </div>
+
+            {/* Grain size selector */}
+            <div className="space-y-2">
+              <div className="text-sm font-medium">Tamaño de grano (opcional):</div>
+              <GrainSizeSelector
+                currentGrainSize={selectedGrainSize}
+                onSelect={setSelectedGrainSize}
+                onClear={() => setSelectedGrainSize(undefined)}
+              />
+              {selectedGrainSize && (
+                <div className="text-xs text-gray-600">
+                  Tamaño seleccionado: <Badge variant="outline">{selectedGrainSize.term}</Badge>
+                </div>
+              )}
+            </div>
             
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <div className="text-xs font-medium mb-1">Esfericidad:</div>
-                <SphericitySelector
-                  currentSphericity={selectedSphericity}
-                  onSelect={setSelectedSphericity}
-                  onClear={() => setSelectedSphericity(undefined)}
-                />
+            {/* Texture characteristics */}
+            <div className="space-y-3">
+              <div className="text-sm font-medium">Características texturales sedimentarias (opcionales):</div>
+              
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <div className="text-xs font-medium mb-1">Esfericidad:</div>
+                  <SphericitySelector
+                    currentSphericity={selectedSphericity}
+                    onSelect={setSelectedSphericity}
+                    onClear={() => setSelectedSphericity(undefined)}
+                  />
+                </div>
+                
+                <div>
+                  <div className="text-xs font-medium mb-1">Redondez:</div>
+                  <RoundnessSelector
+                    currentRoundness={selectedRoundness}
+                    onSelect={setSelectedRoundness}
+                    onClear={() => setSelectedRoundness(undefined)}
+                  />
+                </div>
               </div>
               
-              <div>
-                <div className="text-xs font-medium mb-1">Redondez:</div>
-                <RoundnessSelector
-                  currentRoundness={selectedRoundness}
-                  onSelect={setSelectedRoundness}
-                  onClear={() => setSelectedRoundness(undefined)}
-                />
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <div className="text-xs font-medium mb-1">Tipo de Contacto:</div>
-                <ContactsSelector
-                  currentContacts={selectedContacts}
-                  onSelect={setSelectedContacts}
-                  onClear={() => setSelectedContacts(undefined)}
-                />
-              </div>
-              
-              <div>
-                <div className="text-xs font-medium mb-1">Sorteo:</div>
-                <SortingSelector
-                  currentSorting={selectedSorting}
-                  onSelect={setSelectedSorting}
-                  onClear={() => setSelectedSorting(undefined)}
-                />
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <div className="text-xs font-medium mb-1">Madurez Textural:</div>
-                <MaturitySelector
-                  currentMaturity={selectedMaturity}
-                  onSelect={setSelectedMaturity}
-                  onClear={() => setSelectedMaturity(undefined)}
-                />
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <div className="text-xs font-medium mb-1">Tipo de Contacto:</div>
+                  <ContactsSelector
+                    currentContacts={selectedContacts}
+                    onSelect={setSelectedContacts}
+                    onClear={() => setSelectedContacts(undefined)}
+                  />
+                </div>
+                
+                <div>
+                  <div className="text-xs font-medium mb-1">Sorteo:</div>
+                  <SortingSelector
+                    currentSorting={selectedSorting}
+                    onSelect={setSelectedSorting}
+                    onClear={() => setSelectedSorting(undefined)}
+                  />
+                </div>
               </div>
               
-              <div>
-                <div className="text-xs font-medium mb-1">Empaquetamiento:</div>
-                <PackingSelector
-                  currentPacking={selectedPacking}
-                  onSelect={setSelectedPacking}
-                  onClear={() => setSelectedPacking(undefined)}
-                />
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <div className="text-xs font-medium mb-1">Madurez Textural:</div>
+                  <MaturitySelector
+                    currentMaturity={selectedMaturity}
+                    onSelect={setSelectedMaturity}
+                    onClear={() => setSelectedMaturity(undefined)}
+                  />
+                </div>
+                
+                <div>
+                  <div className="text-xs font-medium mb-1">Empaquetamiento:</div>
+                  <PackingSelector
+                    currentPacking={selectedPacking}
+                    onSelect={setSelectedPacking}
+                    onClear={() => setSelectedPacking(undefined)}
+                  />
+                </div>
               </div>
-            </div>
-            
-            <div className="flex flex-wrap gap-1 text-xs text-gray-600">
-              {selectedSphericity && (
-                <Badge variant="outline" className="text-xs">Esfericidad: {selectedSphericity.term}</Badge>
-              )}
-              {selectedRoundness && (
-                <Badge variant="outline" className="text-xs">Redondez: {selectedRoundness.term}</Badge>
-              )}
-              {selectedContacts && (
-                <Badge variant="outline" className="text-xs">Contacto: {selectedContacts.term}</Badge>
-              )}
-              {selectedSorting && (
-                <Badge variant="outline" className="text-xs">Sorteo: {selectedSorting.term}</Badge>
-              )}
-              {selectedMaturity && (
-                <Badge variant="outline" className="text-xs">Madurez: {selectedMaturity.term}</Badge>
-              )}
-              {selectedPacking && (
-                <Badge variant="outline" className="text-xs">Empaquetamiento: {selectedPacking.term}</Badge>
-              )}
+              
+              <div className="flex flex-wrap gap-1 text-xs text-gray-600">
+                {selectedSphericity && (
+                  <Badge variant="outline" className="text-xs">Esfericidad: {selectedSphericity.term}</Badge>
+                )}
+                {selectedRoundness && (
+                  <Badge variant="outline" className="text-xs">Redondez: {selectedRoundness.term}</Badge>
+                )}
+                {selectedContacts && (
+                  <Badge variant="outline" className="text-xs">Contacto: {selectedContacts.term}</Badge>
+                )}
+                {selectedSorting && (
+                  <Badge variant="outline" className="text-xs">Sorteo: {selectedSorting.term}</Badge>
+                )}
+                {selectedMaturity && (
+                  <Badge variant="outline" className="text-xs">Madurez: {selectedMaturity.term}</Badge>
+                )}
+                {selectedPacking && (
+                  <Badge variant="outline" className="text-xs">Empaquetamiento: {selectedPacking.term}</Badge>
+                )}
+              </div>
             </div>
           </div>
 
-          <Tabs defaultValue="minerals" className="flex-1 overflow-hidden flex flex-col">
-            <TabsList className="grid w-full grid-cols-2">
+          {/* Update Tabs container */}
+          <Tabs defaultValue="minerals" className="flex flex-col flex-1 min-h-0 mt-4">
+            <TabsList className="grid w-full grid-cols-2 flex-shrink-0">
               <TabsTrigger value="minerals">Minerales</TabsTrigger>
               <TabsTrigger value="textures">Texturas</TabsTrigger>
             </TabsList>
             
-            <TabsContent value="minerals" className="flex-1 overflow-y-auto space-y-2 mt-2">
+            <TabsContent 
+              value="minerals" 
+              className="flex-1 overflow-y-auto min-h-0 space-y-2 mt-2 pr-2"
+              style={{ maxHeight: 'calc(50vh - 80px)' }}
+            >
               {Object.entries(filteredDatabase).map(([category, minerals]) => (
                 <Collapsible
                   key={category}
@@ -322,7 +334,11 @@ export const MineralSelector = ({ open, onOpenChange, onSelect, usedColors }: Mi
               ))}
             </TabsContent>
 
-            <TabsContent value="textures" className="flex-1 overflow-y-auto space-y-2 mt-2">
+            <TabsContent 
+              value="textures" 
+              className="flex-1 overflow-y-auto min-h-0 space-y-2 mt-2 pr-2"
+              style={{ maxHeight: 'calc(50vh - 80px)' }}
+            >
               {Object.entries(filteredTextureDatabase).map(([category, textures]) => (
                 <Collapsible
                   key={category}
@@ -355,7 +371,8 @@ export const MineralSelector = ({ open, onOpenChange, onSelect, usedColors }: Mi
             </TabsContent>
           </Tabs>
 
-          <div className="flex justify-end gap-2 pt-4 border-t">
+          {/* Footer - keep it at the bottom */}
+          <div className="flex justify-end gap-2 pt-4 mt-auto border-t flex-shrink-0">
             <Button variant="outline" onClick={() => onOpenChange(false)}>
               Cancelar
             </Button>
