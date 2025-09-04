@@ -1,3 +1,21 @@
+/**
+ * MineralSelector Component
+ * 
+ * A comprehensive dialog-based selector for minerals and textures in geological studies.
+ * Features include:
+ * - Search functionality for minerals and textures
+ * - Color selection for counters
+ * - Grain size selection
+ * - Multiple texture characteristic selections
+ * - Categorized lists of minerals and textures
+ * - Collapsible categories for better organization
+ * 
+ * @component
+ * @requires react-beautiful-dnd
+ * @requires lucide-react
+ */
+
+// Import statements for required components and utilities
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -37,10 +55,13 @@ interface MineralSelectorProps {
 }
 
 export const MineralSelector = ({ open, onOpenChange, onSelect, usedColors }: MineralSelectorProps) => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [openCategories, setOpenCategories] = useState<string[]>([]);
-  const [openTextureCategories, setOpenTextureCategories] = useState<string[]>([]);
-  const [selectedColor, setSelectedColor] = useState<string>('');
+  // State management for search and selections
+  const [searchTerm, setSearchTerm] = useState('');              // Controls search input
+  const [openCategories, setOpenCategories] = useState<string[]>([]);  // Tracks expanded mineral categories
+  const [openTextureCategories, setOpenTextureCategories] = useState<string[]>([]); // Tracks expanded texture categories
+  const [selectedColor, setSelectedColor] = useState<string>(''); // Selected counter color
+  
+  // States for various mineral/texture characteristics
   const [selectedGrainSize, setSelectedGrainSize] = useState<{
     category: 'sedimentarias' | 'igneas';
     term: string;
@@ -53,6 +74,10 @@ export const MineralSelector = ({ open, onOpenChange, onSelect, usedColors }: Mi
   const [selectedMaturity, setSelectedMaturity] = useState<{ term: string; description: string; } | undefined>();
   const [selectedPacking, setSelectedPacking] = useState<{ term: string; description: string; } | undefined>();
 
+  /**
+   * Toggles the expansion state of a mineral category
+   * @param {string} category - The category to toggle
+   */
   const toggleCategory = (category: string) => {
     setOpenCategories(prev => 
       prev.includes(category)
@@ -61,6 +86,10 @@ export const MineralSelector = ({ open, onOpenChange, onSelect, usedColors }: Mi
     );
   };
 
+  /**
+   * Toggles the expansion state of a texture category
+   * @param {string} category - The category to toggle
+   */
   const toggleTextureCategory = (category: string) => {
     setOpenTextureCategories(prev => 
       prev.includes(category)
@@ -69,11 +98,20 @@ export const MineralSelector = ({ open, onOpenChange, onSelect, usedColors }: Mi
     );
   };
 
+  /**
+   * Gets the first available color from the color palette
+   * @returns {string} An unused color or the first color if all are used
+   */
   const getAvailableColor = () => {
     const availableColors = COUNTER_COLORS.filter(color => !usedColors.includes(color));
     return availableColors.length > 0 ? availableColors[0] : COUNTER_COLORS[0];
   };
 
+  /**
+   * Handles the selection of a mineral or texture
+   * Combines all selected properties and calls the onSelect callback
+   * @param {string} mineralName - Name of the selected mineral or texture
+   */
   const handleSelect = (mineralName: string) => {
     const color = selectedColor || getAvailableColor();
     onSelect(mineralName, color, selectedGrainSize, selectedSphericity, selectedRoundness, selectedContacts, selectedSorting, selectedMaturity, selectedPacking);
@@ -89,6 +127,7 @@ export const MineralSelector = ({ open, onOpenChange, onSelect, usedColors }: Mi
     setSelectedPacking(undefined);
   };
 
+  // Mapping of category IDs to display names
   const categoryNames: Record<string, string> = {
     tectosilicatos: 'Tectosilicatos',
     filosilicatos: 'Filosilicatos',
@@ -111,6 +150,7 @@ export const MineralSelector = ({ open, onOpenChange, onSelect, usedColors }: Mi
     minerales_detríticos: 'Minerales Detríticos'
   };
 
+  // Mapping of texture category IDs to display names
   const textureCategoryNames: Record<string, string> = {
     texturas_igneas: 'Texturas Ígneas',
     texturas_sedimentarias: 'Texturas Sedimentarias',
@@ -122,6 +162,10 @@ export const MineralSelector = ({ open, onOpenChange, onSelect, usedColors }: Mi
     alteraciones_diageneticas: 'Alteraciones Diagenéticas'
   };
 
+  /**
+   * Filters the mineral database based on search term
+   * Searches in both name and formula fields
+   */
   const filteredDatabase = Object.entries(MINERAL_DATABASE).reduce((acc, [category, minerals]) => {
     const filtered = minerals.filter(mineral =>
       mineral.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -133,6 +177,10 @@ export const MineralSelector = ({ open, onOpenChange, onSelect, usedColors }: Mi
     return acc;
   }, {} as typeof MINERAL_DATABASE);
 
+  /**
+   * Filters the texture database based on search term
+   * Searches in both term and description fields
+   */
   const filteredTextureDatabase = Object.entries(TEXTURE_DATABASE).reduce((acc, [category, textures]) => {
     const filtered = textures.filter(texture =>
       texture.term.toLowerCase().includes(searchTerm.toLowerCase()) ||

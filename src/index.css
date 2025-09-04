@@ -1,56 +1,77 @@
+/**
+ * Main Stylesheet
+ * 
+ * This file contains the core styles and theming system for the mineral counter application.
+ * It uses Tailwind CSS with custom theme configurations for both light and dark modes.
+ */
+
+/* Tailwind CSS Directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/**
+ * Base Theme Configuration
+ * Defines CSS variables for the light theme (default) and dark theme
+ * Uses HSL color format (Hue, Saturation, Lightness)
+ */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core Background Colors */
+    --background: 0 0% 100%;      /* Pure white background */
+    --foreground: 222.2 84% 4.9%; /* Near-black text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Card Component Colors */
+    --card: 0 0% 100%;           /* White card background */
+    --card-foreground: 222.2 84% 4.9%; /* Card text color */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    /* Popover/Dialog Colors */
+    --popover: 0 0% 100%;        /* White popover background */
+    --popover-foreground: 222.2 84% 4.9%; /* Popover text */
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary Action Colors */
+    --primary: 222.2 47.4% 11.2%;    /* Main action color */
+    --primary-foreground: 210 40% 98%; /* Text on primary color */
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary/Supporting Colors */
+    --secondary: 210 40% 96.1%;       /* Light gray background */
+    --secondary-foreground: 222.2 47.4% 11.2%; /* Dark text */
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted/Subtle Colors */
+    --muted: 210 40% 96.1%;           /* Subtle background */
+    --muted-foreground: 215.4 16.3% 46.9%; /* Subtle text */
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent Colors */
+    --accent: 210 40% 96.1%;          /* Highlight color */
+    --accent-foreground: 222.2 47.4% 11.2%; /* Text on accent */
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Destructive Action Colors */
+    --destructive: 0 84.2% 60.2%;     /* Error/delete red */
+    --destructive-foreground: 210 40% 98%; /* Text on destructive */
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* UI Element Colors */
+    --border: 214.3 31.8% 91.4%;      /* Border color */
+    --input: 214.3 31.8% 91.4%;       /* Input field border */
+    --ring: 222.2 84% 4.9%;           /* Focus ring color */
 
-    --radius: 0.5rem;
+    /* Border Radius */
+    --radius: 0.5rem;                 /* Consistent corner rounding */
 
-    --sidebar-background: 0 0% 98%;
-
+    /* Sidebar Specific Colors */
+    --sidebar-background: 0 0% 98%;    /* Slightly off-white */
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
+  /**
+   * Dark Theme Override
+   * Activated when .dark class is present on an ancestor element
+   */
   .dark {
     /* Improved background with better depth */
     --background: 224 71% 4%;
@@ -101,39 +122,45 @@
   }
 }
 
+/**
+ * Base Styles and Animations
+ * Defines core element styles and transitions
+ */
 @layer base {
+  /* Apply border colors globally */
   * {
     @apply border-border;
   }
 
+  /* Base body styles with theme transition */
   body {
     @apply bg-background text-foreground;
-    /* Smooth transitions for theme switching */
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
-  /* Apply smooth transitions to all themed elements */
+  /* Theme Transition Styles */
+  /* Apply smooth transitions to themed elements */
   *[class*="bg-"],
   *[class*="text-"],
   *[class*="border-"] {
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    transition: background-color 0.3s ease, 
+                color 0.3s ease, 
+                border-color 0.3s ease;
   }
 
-  /* Special handling for cards and interactive elements */
+  /* Interactive Element Styles */
   .card,
   button,
   input,
   textarea,
   select {
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color 0.3s ease, 
+                color 0.3s ease, 
+                border-color 0.3s ease, 
+                box-shadow 0.3s ease;
   }
 
-  /* Smooth transitions for theme toggle */
-  .theme-toggle {
-    transition: all 0.3s ease;
-  }
-
-  /* Enhanced focus states for better accessibility in both themes */
+  /* Accessibility Focus Styles */
   button:focus-visible,
   input:focus-visible,
   textarea:focus-visible,
@@ -144,16 +171,17 @@
     transition: outline-color 0.2s ease;
   }
 
-  /* Interactive elements hover states */
+  /* Hover Effects */
   button:hover:not(:disabled),
   [role="button"]:hover:not(:disabled) {
     transform: translateY(-1px);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
-  /* Enhanced card hover states */
+  /* Card Hover Effects */
   [data-card]:hover {
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 
+                0 4px 6px -4px rgb(0 0 0 / 0.1);
     transition: box-shadow 0.3s ease;
   }
 
@@ -161,7 +189,7 @@
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.2);
   }
 
-  /* Better visual feedback for disabled states */
+  /* Disabled State Styles */
   button:disabled,
   input:disabled,
   textarea:disabled,

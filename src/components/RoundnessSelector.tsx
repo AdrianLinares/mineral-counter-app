@@ -7,6 +7,15 @@ import { Search, CornerDownLeft, ChevronDown, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { ROUNDNESS_DATABASE, RoundnessTerm } from '@/types/mineral';
 
+/**
+ * Props interface for the RoundnessSelector component
+ * @interface RoundnessSelectorProps
+ * @property {Object} currentRoundness - Currently selected roundness (optional)
+ * @property {string} currentRoundness.term - Name of the roundness grade
+ * @property {string} currentRoundness.description - Description of the roundness grade
+ * @property {Function} onSelect - Callback function when a roundness grade is selected
+ * @property {Function} onClear - Callback function when the selection is cleared
+ */
 interface RoundnessSelectorProps {
   currentRoundness?: {
     term: string;
@@ -16,19 +25,51 @@ interface RoundnessSelectorProps {
   onClear: () => void;
 }
 
+/**
+ * RoundnessSelector Component
+ * 
+ * A dialog-based selector for choosing grain roundness grades in geological studies.
+ * Features include:
+ * - Search functionality for roundness grades
+ * - Clear selection option
+ * - Visual feedback for selected item
+ * - Scrollable list with descriptions
+ * 
+ * @component
+ * @example
+ * ```tsx
+ * <RoundnessSelector
+ *   currentRoundness={selectedRoundness}
+ *   onSelect={(roundness) => handleRoundnessSelection(roundness)}
+ *   onClear={() => clearRoundnessSelection()}
+ * />
+ * ```
+ */
 export const RoundnessSelector = ({ 
   currentRoundness, 
   onSelect, 
   onClear 
 }: RoundnessSelectorProps) => {
+  // State for dialog visibility
   const [open, setOpen] = useState(false);
+  // State for search input
   const [searchTerm, setSearchTerm] = useState('');
 
+  /**
+   * Filters the roundness grades based on search term
+   * Searches in both term and description fields
+   * Case-insensitive search
+   */
   const filteredRoundness = ROUNDNESS_DATABASE.redondez.filter(roundness =>
     roundness.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
     roundness.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  /**
+   * Handles the selection of a roundness grade
+   * Updates the selection, closes the dialog and resets search
+   * @param {RoundnessTerm} roundness - The selected roundness grade
+   */
   const handleSelect = (roundness: RoundnessTerm) => {
     onSelect({
       term: roundness.term,
@@ -38,6 +79,10 @@ export const RoundnessSelector = ({
     setSearchTerm('');
   };
 
+  /**
+   * Handles clearing the current selection
+   * Calls onClear callback and closes the dialog
+   */
   const handleClear = () => {
     onClear();
     setOpen(false);

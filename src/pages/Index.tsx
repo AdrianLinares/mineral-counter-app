@@ -1,3 +1,21 @@
+/**
+ * MineralCounterApp - Main Application Component
+ * 
+ * A comprehensive application for counting and analyzing minerals in geological thin sections.
+ * This component serves as the main entry point and orchestrates all functionality.
+ * 
+ * Key Features:
+ * - Mineral and texture counting
+ * - Multiple view modes (grid, list)
+ * - Drag and drop reordering
+ * - Data import/export
+ * - Theme switching (light/dark)
+ * - Statistical tracking
+ * - Complete texture analysis
+ * 
+ * @component
+ */
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -35,15 +53,33 @@ import type { ViewMode } from '@/types/mineral';
 import { DropResult } from 'react-beautiful-dnd';
 
 export default function MineralCounterApp() {
+  /**
+   * View Mode State
+   * Controls how counters are displayed
+   * - 'grid': Multiple counters in a responsive grid
+   * - 'list': Vertical list of counters
+   * - 'individual': Single counter view (deprecated)
+   */
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
+
+  /**
+   * Dialog States
+   * Control the visibility of various modal dialogs
+   */
   const [mineralSelectorOpen, setMineralSelectorOpen] = useState(false);
   const [exportDialogOpen, setExportDialogOpen] = useState(false);
   const [importDialogOpen, setImportDialogOpen] = useState(false);
   const [resetAllDialogOpen, setResetAllDialogOpen] = useState(false);
   const [deleteAllDialogOpen, setDeleteAllDialogOpen] = useState(false);
+
+  /**
+   * Import Text State
+   * Stores the JSON text for data import
+   */
   const [importText, setImportText] = useState('');
+
+  // Hooks for toast notifications and counter management
   const { toast } = useToast();
-  
   const {
     counters,
     addCounter,
@@ -59,9 +95,23 @@ export default function MineralCounterApp() {
     totalCount
   } = useCounters();
 
+  /**
+   * Handles the addition of a new counter
+   * Creates a counter with specified properties and shows success notification
+   * 
+   * @param {string} mineralName - Name of the mineral
+   * @param {string} color - Selected color for the counter
+   * @param {Object} grainSize - Grain size characteristics (optional)
+   * @param {Object} sphericity - Sphericity characteristics (optional)
+   * @param {Object} roundness - Roundness characteristics (optional)
+   * @param {Object} contacts - Contact type characteristics (optional)
+   * @param {Object} sorting - Sorting characteristics (optional)
+   * @param {Object} maturity - Maturity characteristics (optional)
+   * @param {Object} packing - Packing characteristics (optional)
+   */
   const handleAddCounter = (
-    mineralName: string, 
-    color: string, 
+    mineralName: string,
+    color: string,
     grainSize?: {
       category: 'sedimentarias' | 'igneas';
       term: string;
@@ -81,6 +131,10 @@ export default function MineralCounterApp() {
     });
   };
 
+  /**
+   * Exports counter data to a JSON file
+   * Downloads file with current date in filename
+   */
   const handleExport = () => {
     const data = exportData();
     const blob = new Blob([data], { type: 'application/json' });
@@ -99,6 +153,10 @@ export default function MineralCounterApp() {
     });
   };
 
+  /**
+   * Imports counter data from JSON text
+   * Validates data format and shows success/error notification
+   */
   const handleImport = () => {
     if (importData(importText)) {
       toast({
@@ -116,6 +174,10 @@ export default function MineralCounterApp() {
     }
   };
 
+  /**
+   * Resets all counter values to zero
+   * Shows confirmation dialog before resetting
+   */
   const handleResetAll = () => {
     resetAllCounters();
     setResetAllDialogOpen(false);
@@ -125,6 +187,10 @@ export default function MineralCounterApp() {
     });
   };
 
+  /**
+   * Deletes all counters
+   * Shows confirmation dialog before deletion
+   */
   const handleDeleteAll = () => {
     counters.forEach(counter => deleteCounter(counter.id));
     setDeleteAllDialogOpen(false);
@@ -134,6 +200,12 @@ export default function MineralCounterApp() {
     });
   };
 
+  /**
+   * Handles drag and drop reordering of counters
+   * Updates counter positions and shows confirmation notification
+   * 
+   * @param {DropResult} result - Drag and drop operation result
+   */
   const handleDragEnd = (result: DropResult) => {
     const { destination, source } = result;
 
@@ -156,8 +228,16 @@ export default function MineralCounterApp() {
     });
   };
 
+  /**
+   * Array of colors currently in use by counters
+   * Used to prevent duplicate colors in new counters
+   */
   const usedColors = counters.map(c => c.color);
 
+  /**
+   * Determines CSS class names for counter grid based on view mode
+   * @returns {string} CSS class names for layout
+   */
   const getGridClassName = () => {
     switch (viewMode) {
       case 'individual':
@@ -171,9 +251,10 @@ export default function MineralCounterApp() {
     }
   };
 
+  // Component Layout Structure:
   return (
     <div className="min-h-screen bg-background transition-colors">
-      {/* Header */}
+      {/* Header Section */}
       <header className="border-b bg-card shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
@@ -258,9 +339,10 @@ export default function MineralCounterApp() {
         </div>
       </header>
 
+      {/* Main Content Container */}
       <div className="container mx-auto px-4 py-6">
         <div className="flex flex-col lg:flex-row gap-6">
-          {/* Sidebar */}
+          {/* Sidebar with Controls */}
           <div className="lg:w-80">
             <Card data-card>
               <CardHeader>
@@ -495,7 +577,7 @@ export default function MineralCounterApp() {
             </Card>
           </div>
 
-          {/* Main Content */}
+          {/* Main Content Area */}
           <div className="flex-1">
             {/* Drag and drop hint */}
             {counters.length > 1 && viewMode !== 'individual' && (
@@ -580,6 +662,7 @@ export default function MineralCounterApp() {
         </div>
       </div>
 
+      {/* Mineral Selector Dialog */}
       <MineralSelector
         open={mineralSelectorOpen}
         onOpenChange={setMineralSelectorOpen}

@@ -1,3 +1,11 @@
+/**
+ * CounterCard Component
+ * 
+ * This component represents a card for counting minerals and their characteristics in geological studies.
+ * It supports different view modes (individual, grid, list) and provides functionality for incrementing,
+ * decrementing, and managing mineral properties.
+ */
+
 import { useState } from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -51,7 +59,10 @@ export const CounterCard = ({
   const [editMaturity, setEditMaturity] = useState<{ term: string; description: string; } | undefined>(counter.maturity);
   const [editPacking, setEditPacking] = useState<{ term: string; description: string; } | undefined>(counter.packing);
 
-  // Agregar esta función para resetear los valores
+  /**
+   * Resets all edit values to their current counter values
+   * Called when opening the settings dialog or canceling changes
+   */
   const resetEditValues = () => {
     setEditIncrement(counter.increment.toString());
     setEditMaxValue(counter.maxValue?.toString() || '');
@@ -65,7 +76,11 @@ export const CounterCard = ({
     setEditPacking(counter.packing);
   };
 
-  // Modificar la función que controla el diálogo
+  /**
+   * Handles the opening and closing of the settings dialog
+   * Resets edit values when opening the dialog
+   * @param {boolean} open - Whether the dialog should be open
+   */
   const handleDialogChange = (open: boolean) => {
     setSettingsOpen(open);
     if (open) {
@@ -73,6 +88,10 @@ export const CounterCard = ({
     }
   };
 
+  /**
+   * Saves the current edit values to the counter
+   * Validates and updates all counter properties
+   */
   const handleSaveSettings = () => {
     onUpdate({
       increment: Math.max(1, parseInt(editIncrement) || 1),
@@ -89,13 +108,20 @@ export const CounterCard = ({
     setSettingsOpen(false);
   };
 
+  /**
+   * Cancels the current edits and closes the settings dialog
+   * Resets all edit values to their original state
+   */
   const handleCancel = () => {
     resetEditValues();
     setSettingsOpen(false);
   };
 
+  // Render different layouts based on viewMode
   if (viewMode === 'list') {
     return (
+      // List view layout
+      // Shows a compact horizontal layout with basic controls and information
       <div className="flex items-center justify-between p-4 border rounded-lg bg-card" data-card>
         <div className="flex items-center gap-4">
           <div 
@@ -335,12 +361,16 @@ export const CounterCard = ({
     );
   }
 
+  // Calculate card className based on viewMode
   const cardClassName = viewMode === 'grid' 
-    ? "w-full max-w-sm" 
-    : "w-full max-w-md mx-auto";
+    ? "w-full max-w-sm"  // Grid view - smaller width
+    : "w-full max-w-md mx-auto";  // Individual view - medium width
 
   return (
+    // Card view layout (grid or individual)
+    // Shows a vertical layout with detailed information and controls
     <Card className={cardClassName} data-card>
+      {/* Card header with mineral name and characteristics */}
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -556,6 +586,7 @@ export const CounterCard = ({
         </div>
       </CardHeader>
       
+      {/* Card content with counter value and control buttons */}
       <CardContent className="space-y-4">
         <div className="text-center">
           <div className="text-4xl font-bold mb-2" style={{ color: counter.color }}>

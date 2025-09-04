@@ -1,23 +1,70 @@
-/* Scrollbar styles */
+/**
+ * Global CSS Styles
+ * 
+ * This file contains global styles for the application, particularly
+ * focused on scrollbar customization for better user experience.
+ */
+
+/**
+ * Custom Scrollbar Styles
+ * 
+ * These styles customize the appearance of scrollbars in elements
+ * with the .overflow-y-auto class.
+ *
+ * Features:
+ * - Thin scrollbar width
+ * - Semi-transparent thumb
+ * - Hidden track
+ * - Smooth corners
+ * - Cross-browser support
+ */
+
+/* Firefox scrollbar styles */
 .overflow-y-auto {
+  /* Use thin scrollbar variant */
   scrollbar-width: thin;
+  /* Set thumb color and track to transparent */
   scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
 }
 
+/* Webkit (Chrome, Safari, Edge) scrollbar styles */
+/* Set the scrollbar width */
 .overflow-y-auto::-webkit-scrollbar {
-  width: 6px;
+  width: 6px; /* Thin scrollbar */
 }
 
+/* Style the scrollbar track (background) */
 .overflow-y-auto::-webkit-scrollbar-track {
-  background: transparent;
+  background: transparent; /* Hidden track */
 }
 
+/* Style the scrollbar thumb (draggable part) */
 .overflow-y-auto::-webkit-scrollbar-thumb {
-  background-color: rgba(155, 155, 155, 0.5);
-  border-radius: 3px;
+  background-color: rgba(155, 155, 155, 0.5); /* Semi-transparent gray */
+  border-radius: 3px; /* Rounded corners */
 }
 
-/* Prevent content jump when scrollbar appears */
+/**
+ * Dialog Content Scrollbar Fix
+ * 
+ * Prevents layout shift when content becomes scrollable in dialogs.
+ * This ensures a consistent layout whether the scrollbar is present or not.
+ */
 .dialog-content {
+  /* Reserve space for scrollbar to prevent content jump */
   scrollbar-gutter: stable;
 }
+
+/**
+ * Usage Example:
+ * 
+ * <div className="overflow-y-auto">
+ *   {/* Scrollable content *\/}
+ * </div>
+ * 
+ * <Dialog>
+ *   <DialogContent className="dialog-content">
+ *     {/* Dialog content *\/}
+ *   </DialogContent>
+ * </Dialog>
+ */

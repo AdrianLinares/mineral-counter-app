@@ -7,6 +7,15 @@ import { Search, CircleDot, ChevronDown, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { SPHERICITY_DATABASE, SphericityTerm } from '@/types/mineral';
 
+/**
+ * Props interface for the SphericitySelector component
+ * @interface SphericitySearchProps
+ * @property {Object} currentSphericity - Currently selected sphericity grade (optional)
+ * @property {string} currentSphericity.term - Name of the sphericity grade
+ * @property {string} currentSphericity.description - Description of the sphericity grade
+ * @property {Function} onSelect - Callback function when a sphericity grade is selected
+ * @property {Function} onClear - Callback function when the selection is cleared
+ */
 interface SphericitySearchProps {
   currentSphericity?: {
     term: string;
@@ -16,19 +25,53 @@ interface SphericitySearchProps {
   onClear: () => void;
 }
 
+/**
+ * SphericitySelector Component
+ * 
+ * A dialog-based selector for choosing grain sphericity grades in geological studies.
+ * Sphericity refers to how close a grain's shape is to a perfect sphere.
+ * 
+ * Features:
+ * - Search functionality for sphericity grades
+ * - Clear selection option
+ * - Visual feedback for selected item
+ * - Scrollable list with descriptions
+ * 
+ * @component
+ * @example
+ * ```tsx
+ * <SphericitySelector
+ *   currentSphericity={selectedSphericity}
+ *   onSelect={(sphericity) => handleSphericitySelection(sphericity)}
+ *   onClear={() => clearSphericitySelection()}
+ * />
+ * ```
+ */
 export const SphericitySelector = ({ 
   currentSphericity, 
   onSelect, 
   onClear 
 }: SphericitySearchProps) => {
+  // State for dialog visibility
   const [open, setOpen] = useState(false);
+  // State for search input
   const [searchTerm, setSearchTerm] = useState('');
 
+  /**
+   * Filters sphericity grades based on search term
+   * Searches in both term and description fields
+   * Case-insensitive search
+   */
   const filteredSphericity = SPHERICITY_DATABASE.esfericidad.filter(sphericity =>
     sphericity.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
     sphericity.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  /**
+   * Handles the selection of a sphericity grade
+   * Updates the selection, closes the dialog and resets search
+   * @param {SphericityTerm} sphericity - The selected sphericity grade
+   */
   const handleSelect = (sphericity: SphericityTerm) => {
     onSelect({
       term: sphericity.term,
@@ -38,6 +81,10 @@ export const SphericitySelector = ({
     setSearchTerm('');
   };
 
+  /**
+   * Handles clearing the current selection
+   * Calls onClear callback and closes the dialog
+   */
   const handleClear = () => {
     onClear();
     setOpen(false);
@@ -45,6 +92,7 @@ export const SphericitySelector = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
+      {/* Trigger button that shows current selection or placeholder */}
       <DialogTrigger asChild>
         <Button 
           variant="outline" 
@@ -63,6 +111,7 @@ export const SphericitySelector = ({
         </Button>
       </DialogTrigger>
       
+      {/* Dialog content with search and selection options */}
       <DialogContent className="max-w-2xl max-h-[80vh]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">

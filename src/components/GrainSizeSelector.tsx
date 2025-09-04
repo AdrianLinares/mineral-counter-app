@@ -8,6 +8,16 @@ import { Search, Ruler, ChevronDown, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { GRAIN_SIZE_DATABASE, GrainSizeTerm } from '@/types/mineral';
 
+/**
+ * Interface for the GrainSizeSelector component props
+ * @interface GrainSizeSelectorProps
+ * @property {Object} currentGrainSize - Currently selected grain size (optional)
+ * @property {('sedimentarias' | 'igneas')} currentGrainSize.category - Rock type category
+ * @property {string} currentGrainSize.term - Name of the grain size
+ * @property {string} currentGrainSize.description - Description of the grain size
+ * @property {Function} onSelect - Callback when a grain size is selected
+ * @property {Function} onClear - Callback when the selection is cleared
+ */
 interface GrainSizeSelectorProps {
   currentGrainSize?: {
     category: 'sedimentarias' | 'igneas';
@@ -18,20 +28,44 @@ interface GrainSizeSelectorProps {
   onClear: () => void;
 }
 
+/**
+ * GrainSizeSelector Component
+ * 
+ * A dialog-based selector for choosing grain sizes in geological studies.
+ * Supports two categories: sedimentary and igneous rocks.
+ * Features search functionality and clear selection option.
+ * 
+ * @component
+ * @example
+ * ```tsx
+ * <GrainSizeSelector
+ *   currentGrainSize={selectedSize}
+ *   onSelect={(size) => handleSizeSelection(size)}
+ *   onClear={() => clearSizeSelection()}
+ * />
+ * ```
+ */
 export const GrainSizeSelector = ({ 
   currentGrainSize, 
   onSelect, 
   onClear 
 }: GrainSizeSelectorProps) => {
-  const [open, setOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [activeTab, setActiveTab] = useState<'sedimentarias' | 'igneas'>('sedimentarias');
+  // State management for the component
+  const [open, setOpen] = useState(false);            // Controls dialog visibility
+  const [searchTerm, setSearchTerm] = useState('');   // Manages search input
+  const [activeTab, setActiveTab] = useState<'sedimentarias' | 'igneas'>('sedimentarias');  // Current tab
 
+  // Labels for rock categories
   const categoryLabels = {
     sedimentarias: 'Rocas Sedimentarias',
     igneas: 'Rocas Ígneas'
   };
 
+  /**
+   * Filters grain sizes based on search term
+   * Searches in both term and description fields
+   * Groups results by rock category
+   */
   const filteredGrainSizes = Object.entries(GRAIN_SIZE_DATABASE).reduce((acc, [key, grainSizes]) => {
     const categoryKey = key.includes('sedimentarias') ? 'sedimentarias' : 'igneas';
     const filtered = grainSizes.filter(grainSize =>
@@ -44,6 +78,11 @@ export const GrainSizeSelector = ({
     return acc;
   }, {} as Record<'sedimentarias' | 'igneas', GrainSizeTerm[]>);
 
+  /**
+   * Handles the selection of a grain size
+   * @param {GrainSizeTerm} grainSize - The selected grain size
+   * @param {'sedimentarias' | 'igneas'} category - The rock category
+   */
   const handleSelect = (grainSize: GrainSizeTerm, category: 'sedimentarias' | 'igneas') => {
     onSelect({
       category,
@@ -54,6 +93,10 @@ export const GrainSizeSelector = ({
     setSearchTerm('');
   };
 
+  /**
+   * Handles clearing the current selection
+   * Calls onClear callback and closes the dialog
+   */
   const handleClear = () => {
     onClear();
     setOpen(false);
@@ -61,6 +104,7 @@ export const GrainSizeSelector = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
+      {/* Trigger button that shows current selection or placeholder */}
       <DialogTrigger asChild>
         <Button 
           variant="outline" 
@@ -79,6 +123,7 @@ export const GrainSizeSelector = ({
         </Button>
       </DialogTrigger>
       
+      {/* Dialog content with tabs and search */}
       <DialogContent className="max-w-2xl max-h-[80vh]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
