@@ -125,9 +125,11 @@ const ChartTooltipContent = React.forwardRef<
         return null;
       }
 
-      const [item] = payload;
-      const key = `${labelKey || item.dataKey || item.name || 'value'}`;
-      const itemConfig = getPayloadConfigFromPayload(config, item, key);
+  type PayloadItem = { dataKey?: string; name?: string; payload?: Record<string, unknown>; value?: number; color?: string };
+  const item = payload[0] as PayloadItem | undefined;
+  if (!item) return null;
+  const key = `${labelKey || item.dataKey || item.name || 'value'}`;
+  const itemConfig = getPayloadConfigFromPayload(config, item, key);
       const value = !labelKey && typeof label === 'string' ? config[label as keyof typeof config]?.label || label : itemConfig?.label;
 
       if (labelFormatter) {

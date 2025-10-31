@@ -16,7 +16,7 @@
  * @component
  */
 
-import { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -45,9 +45,9 @@ import {
 } from 'lucide-react';
 import { useCounters } from '@/hooks/useCounters';
 import { MineralSelector } from '@/components/MineralSelector';
-import { CounterCard } from '@/components/CounterCard';
-import { DragDropContainer } from '@/components/DragDropContainer';
-import { DraggableCounterCard } from '@/components/DraggableCounterCard';
+const CounterCard = lazy(() => import('@/components/CounterCard').then(mod => ({ default: mod.CounterCard })));
+const DragDropContainer = lazy(() => import('@/components/DragDropContainer').then(mod => ({ default: mod.DragDropContainer })));
+const DraggableCounterCard = lazy(() => import('@/components/DraggableCounterCard').then(mod => ({ default: mod.DraggableCounterCard })));
 import { ThemeToggle } from '@/components/theme-toggle';
 import type { ViewMode } from '@/types/mineral';
 import { DropResult } from 'react-beautiful-dnd';
@@ -607,37 +607,41 @@ export default function MineralCounterApp() {
             ) : (
               viewMode === 'individual' && counters.length > 0 ? (
                 <div className={getGridClassName()}>
-                  <CounterCard
-                    counter={counters[0]}
-                    onIncrement={() => incrementCounter(counters[0].id)}
-                    onDecrement={() => decrementCounter(counters[0].id)}
-                    onReset={() => resetCounter(counters[0].id)}
-                    onDelete={() => deleteCounter(counters[0].id)}
-                    onUpdate={(updates) => updateCounter(counters[0].id, updates)}
-                    viewMode={viewMode}
-                  />
+                  <Suspense fallback={<div className="p-4 text-center">Cargando contador…</div>}>
+                    <CounterCard
+                      counter={counters[0]!}
+                      onIncrement={() => incrementCounter(counters[0]!.id)}
+                      onDecrement={() => decrementCounter(counters[0]!.id)}
+                      onReset={() => resetCounter(counters[0]!.id)}
+                      onDelete={() => deleteCounter(counters[0]!.id)}
+                      onUpdate={(updates) => updateCounter(counters[0]!.id, updates)}
+                      viewMode={viewMode}
+                    />
+                  </Suspense>
                 </div>
               ) : (
-                <DragDropContainer
-                  onDragEnd={handleDragEnd}
-                  droppableId="counters"
-                  className={getGridClassName()}
-                >
-                  {counters.map((counter, index) => (
-                    <DraggableCounterCard
-                      key={counter.id}
-                      counter={counter}
-                      index={index}
-                      onIncrement={() => incrementCounter(counter.id)}
-                      onDecrement={() => decrementCounter(counter.id)}
-                      onReset={() => resetCounter(counter.id)}
-                      onDelete={() => deleteCounter(counter.id)}
-                      onUpdate={(updates) => updateCounter(counter.id, updates)}
-                      viewMode={viewMode}
-                      isDragEnabled={counters.length > 1}
-                    />
-                  ))}
-                </DragDropContainer>
+                <Suspense fallback={<div className="p-4 text-center">Cargando interfaz…</div>}>
+                  <DragDropContainer
+                    onDragEnd={handleDragEnd}
+                    droppableId="counters"
+                    className={getGridClassName()}
+                  >
+                    {counters.map((counter, index) => (
+                      <DraggableCounterCard
+                        key={counter.id}
+                        counter={counter}
+                        index={index}
+                        onIncrement={() => incrementCounter(counter.id)}
+                        onDecrement={() => decrementCounter(counter.id)}
+                        onReset={() => resetCounter(counter.id)}
+                        onDelete={() => deleteCounter(counter.id)}
+                        onUpdate={(updates) => updateCounter(counter.id, updates)}
+                        viewMode={viewMode}
+                        isDragEnabled={counters.length > 1}
+                      />
+                    ))}
+                  </DragDropContainer>
+                </Suspense>
               )
             )}
 

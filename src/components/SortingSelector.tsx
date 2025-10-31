@@ -60,7 +60,7 @@ export const SortingSelector = ({
    * Searches in both term and description fields
    * Case-insensitive search
    */
-  const filteredSorting = SORTING_DATABASE.sorteo.filter(sorting =>
+  const filteredSorting = (SORTING_DATABASE.sorteo ?? []).filter(sorting =>
     sorting.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
     sorting.description.toLowerCase().includes(searchTerm.toLowerCase())
   );

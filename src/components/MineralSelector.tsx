@@ -114,7 +114,17 @@ export const MineralSelector = ({ open, onOpenChange, onSelect, usedColors }: Mi
    */
   const handleSelect = (mineralName: string) => {
     const color = selectedColor || getAvailableColor();
-    onSelect(mineralName, color, selectedGrainSize, selectedSphericity, selectedRoundness, selectedContacts, selectedSorting, selectedMaturity, selectedPacking);
+    onSelect(
+      mineralName,
+      color as string,
+      selectedGrainSize ?? undefined,
+      selectedSphericity ?? undefined,
+      selectedRoundness ?? undefined,
+      selectedContacts ?? undefined,
+      selectedSorting ?? undefined,
+      selectedMaturity ?? undefined,
+      selectedPacking ?? undefined
+    );
     onOpenChange(false);
     setSearchTerm('');
     setSelectedColor('');
@@ -353,7 +363,8 @@ export const MineralSelector = ({ open, onOpenChange, onSelect, usedColors }: Mi
               {Object.entries(filteredDatabase).map(([category, minerals]) => (
                 <Collapsible
                   key={category}
-                  open={openCategories.includes(category)}
+                  // Auto-open category when there's an active search so results are visible
+                  open={openCategories.includes(category) || searchTerm.trim().length > 0}
                   onOpenChange={() => toggleCategory(category)}
                 >
                   <CollapsibleTrigger className="flex items-center gap-2 w-full p-2 text-left hover:bg-gray-600 rounded">
@@ -390,7 +401,8 @@ export const MineralSelector = ({ open, onOpenChange, onSelect, usedColors }: Mi
               {Object.entries(filteredTextureDatabase).map(([category, textures]) => (
                 <Collapsible
                   key={category}
-                  open={openTextureCategories.includes(category)}
+                  // Auto-open texture category when searching to surface matches
+                  open={openTextureCategories.includes(category) || searchTerm.trim().length > 0}
                   onOpenChange={() => toggleTextureCategory(category)}
                 >
                   <CollapsibleTrigger className="flex items-center gap-2 w-full p-2 text-left hover:bg-gray-600 rounded">

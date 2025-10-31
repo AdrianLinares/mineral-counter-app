@@ -60,7 +60,7 @@ export const RoundnessSelector = ({
    * Searches in both term and description fields
    * Case-insensitive search
    */
-  const filteredRoundness = ROUNDNESS_DATABASE.redondez.filter(roundness =>
+  const filteredRoundness = (ROUNDNESS_DATABASE.redondez ?? []).filter(roundness =>
     roundness.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
     roundness.description.toLowerCase().includes(searchTerm.toLowerCase())
   );

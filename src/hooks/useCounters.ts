@@ -228,6 +228,8 @@ export const useCounters = () => {
     setCounters(prev => {
       const result = Array.from(prev);
       const [removed] = result.splice(startIndex, 1);
+      // If nothing was removed (invalid startIndex), return previous state
+      if (!removed) return prev;
       result.splice(endIndex, 0, removed);
       return result;
     });

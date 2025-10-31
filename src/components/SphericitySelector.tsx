@@ -62,7 +62,7 @@ export const SphericitySelector = ({
    * Searches in both term and description fields
    * Case-insensitive search
    */
-  const filteredSphericity = SPHERICITY_DATABASE.esfericidad.filter(sphericity =>
+  const filteredSphericity = (SPHERICITY_DATABASE.esfericidad ?? []).filter(sphericity =>
     sphericity.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
     sphericity.description.toLowerCase().includes(searchTerm.toLowerCase())
   );

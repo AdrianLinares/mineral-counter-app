@@ -312,3 +312,15 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 <div align="center">
   <strong>🔬 Desarrollado para facilitar el trabajo de petrógrafos, investigadores y estudiantes de geología 🧪</strong>
 </div>
+
+## 🛠️ Developer Notes
+
+- Run a bundle analysis locally (generates dist/bundle-analysis.html):
+
+```pwsh
+pnpm run analyze
+```
+
+- CI: A GitHub Actions workflow is included at `.github/workflows/ci.yml` which runs lint, type-check and a production build on PRs and pushes to `main`.
+
+If you want stricter TypeScript checks enabled by default, I can add a `tsconfig.strict.json` that extends the app config so you can opt into stricter checks incrementally.

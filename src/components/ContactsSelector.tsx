@@ -51,7 +51,7 @@ export const ContactsSelector = ({
    * Filters the contacts database based on the search term
    * Searches in both the term and description fields
    */
-  const filteredContacts = CONTACTS_DATABASE.contactos.filter(contacts =>
+  const filteredContacts = (CONTACTS_DATABASE.contactos ?? []).filter(contacts =>
     contacts.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
     contacts.description.toLowerCase().includes(searchTerm.toLowerCase())
   );

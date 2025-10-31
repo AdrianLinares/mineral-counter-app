@@ -55,7 +55,7 @@ export const MaturitySelector = ({
    * Filters maturity levels based on search term
    * Searches in both term and description fields
    */
-  const filteredMaturity = MATURITY_DATABASE.madurez_textural.filter(maturity =>
+  const filteredMaturity = (MATURITY_DATABASE.madurez_textural ?? []).filter(maturity =>
     maturity.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
     maturity.description.toLowerCase().includes(searchTerm.toLowerCase())
   );

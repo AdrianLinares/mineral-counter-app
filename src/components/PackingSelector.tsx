@@ -60,7 +60,7 @@ export const PackingSelector = ({
    * Searches in both term and description fields
    * Case-insensitive search
    */
-  const filteredPacking = PACKING_DATABASE.empaquetamiento.filter(packing =>
+  const filteredPacking = (PACKING_DATABASE.empaquetamiento ?? []).filter(packing =>
     packing.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
     packing.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
